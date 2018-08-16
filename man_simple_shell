@@ -1,0 +1,40 @@
+.TH SIMMPLE_SHELL 2 "AUG 30 2018" "0.01" "simple_shell man page"
+.SH NAME
+.B simple_shell
+\- handler the command lines like the Shell does
+
+.SH SYNOPSIS
+#include <......>
+
+
+
+.SH DESCRIPTION
+1. firts paragraph
+
+2. second paragraph
+
+.IP
+.P
+.TP
+.B Return Value
+
+.IP
+.P
+.TP
+.B Format of the format string
+
+Commands handling:
+
+PATH
+exit
+env
+
+.IP
+.P
+.TP
+
+.SH BUGS
+No known bugs.
+
+.SH AUTHOR
+Robert Glazel, Cuong Tran
