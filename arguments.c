@@ -1,30 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "shell.h"
 #define BUFSIZE 1024
 
-int main(int ac, char **av)
+int main()
 {
-	int i;
-
-	printf("Arguments: \n");
-	printf("argc is: %d\n", ac);
-	for (i = 0; av[i] != NULL; i++)
-	{
-		printf("Argument number %d: %s\n", i, av[i]);
-	}
-
-	printf("End of arguments:\n");
-
+	int i = 0, j = 0;
 	int status = 1;
-	size_t read;
+	int read;
 	size_t size = BUFSIZE;
 	char *buffer;
+	char **arguments = NULL;
 
 	while(status)
 	{
 		printf("$ ");
-		buffer = malloc(sizeof(char) * size);
 		read = getline(&buffer, &size, stdin);
 		if (read == -1)
 		{
@@ -35,8 +26,11 @@ int main(int ac, char **av)
 			status = 0;
 		else
 		{
-			printf("%s", buffer);
-			free(buffer);
+			arguments = malloc(sizeof(char) * size);
+			j = string_split(buffer, arguments);
+			for (i = 0; i < j; i++)
+				printf("%s\n", arguments[i]);
+			free(arguments);
 		}
 	}
 	return (0);
