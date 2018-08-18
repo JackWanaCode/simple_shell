@@ -9,11 +9,12 @@
 
 int main(void)
 {
-/*	int i = 0, j = 0;
- */	int status = 1;
+	int i = 0;
+	int status = 1;
 	int read;
 	size_t size = BUFSIZE;
 	char *buffer;
+	char f_av[BUFSIZE] = "/bin/";
 	char **arguments = NULL;
 	pid_t child_pid;
 
@@ -41,7 +42,14 @@ int main(void)
 			else if (child_pid == 0)
 			{
 				if (execve(arguments[0], arguments, NULL) == -1)
-					perror("Error:");
+				{
+					for (i = 0; arguments[0][i] != '\0'; i++)
+						f_av[i + 5] = arguments[0][i];
+					f_av[i + 5] = '\0';
+					printf("%s", f_av);
+					if (execve(f_av, arguments, NULL) == -1)
+						perror("Error:");
+				}
 			}
 			else
 				wait(NULL);
