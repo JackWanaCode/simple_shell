@@ -35,6 +35,19 @@ int main(void)
 		{
 			arguments = malloc(sizeof(char) * size);
 			string_split(buffer, arguments, read);
+			if (_strcmp(arguments[0], "cd") == 0)
+			{
+				if (arguments[1] == NULL)
+					perror ("Error");
+				else
+					if (chdir(arguments[1]) != 0)
+						perror("Error");
+				continue;
+			}
+			_strcpy(f_av1, "/bin/");
+			_strcpy(f_av2, "/usr/bin/");
+			f_av = argv_check(arguments[0], arguments[1], f_av1, f_av2);
+			/* fork the program */
 			child_pid = fork();
 			if (child_pid == -1)
 			{
@@ -43,9 +56,7 @@ int main(void)
 			}
 			else if (child_pid == 0)
 			{
-				_strcpy(f_av1, "/bin/");
-				_strcpy(f_av2, "/usr/bin/");
-				f_av = argv_check(arguments[0], f_av1, f_av2);
+
 				if (execve(f_av, arguments, NULL) != -1)
 					free(arguments);
 				else

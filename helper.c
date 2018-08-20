@@ -1,6 +1,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include "shell.h"
@@ -36,19 +37,28 @@ int string_split(char *buffer, char **array, int read)
  * @path2: string of path: /usr/bin/
  * return: pointer of str that contain valid path. Or, return str of command.
  */
-char *argv_check(char *av, char *f_av1, char *f_av2)
+char *argv_check(char *av1, char *av2, char *f_av1, char *f_av2)
 {
 	struct stat st;
 
-	if (stat(av, &st) == 0)
-		return (av);
-	_strcat(f_av1, av);
+	/* handle exit function */
+	if (_strcmp(av1, "exit") == 0)
+		exit(_stoi(av2));
+
+	/* handle local functions */
+	if (stat(av1, &st) == 0)
+		return (av1);
+
+	/* else case */
+	_strcat(f_av1, av1);
 	if (stat(f_av1, &st) == 0)
 		return (f_av1);
-	_strcat(f_av2, av);
+	_strcat(f_av2, av1);
 	if(stat(f_av2, &st) == 0)
 		return (f_av2);
-	return (av);
+
+	/* return av1 by default */
+	return (av1);
 }
 
 /**
@@ -94,4 +104,42 @@ char *_strcpy(char *dest, char *src)
 	}
 	*(dest + i) = '\0';
 	return (dest);
+}
+/**
+ * _strcmp - Entry point
+ * Description: compare 2 string, character by character
+ * @s1: first string to be compared.
+ * @s2: second string for comparing.
+ *
+ * Return: equal ? 0 : ascii dif value for the 1st dif numbers.
+ */
+int _strcmp(char *s1, char *s2)
+{
+	int i;
+
+	for (i = 0; *(s1 + i) != '\0'; i++)
+	{
+		if (*(s1 + i) != *(s2 + i))
+			return (*(s1 + i) - *(s2 + i));
+	}
+	if (*(s2 + i) != '\0')
+		return (*(s2 + i) * -1);
+	return (0);
+}
+
+/**
+ * _stoi - Entry point
+ * Description:
+ * @s:
+ * Return: number as an integer type
+ */
+int _stoi(char *s)
+{
+	int n = 0, i = 0;
+
+	for (;s[i] != '\0'; i++)
+	{
+		n = n * 10 + (s[i] - '0');
+	}
+	return (n);
 }
