@@ -57,7 +57,10 @@ int main(void)
 			else if (child_pid == 0)
 			{
 				if (execve(f_av, av, NULL) == -1)
+				{
 					perror("execve error");
+					free(av);
+				}
 			}
 			else
 			{
