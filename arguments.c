@@ -61,11 +61,7 @@ int main(void)
 				if (execve(f_av, av, NULL) == -1)
 				{
 					perror("execve error");
-<<<<<<< HEAD
-					free(av);
-=======
 					exit (0);
->>>>>>> 9fc59eb4e12f746879c761dc176ac43c844a5f34
 				}
 			}
 			else
