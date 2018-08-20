@@ -46,8 +46,10 @@ int main(void)
 			}
 			_strcpy(f_av1, "/bin/");
 			_strcpy(f_av2, "/usr/bin/");
+			printf("%s\n", av[0]);
 			f_av = argv_check(av[0], av[1], f_av1, f_av2);
-/* fork the program */
+
+			/* fork the program */
 			child_pid = fork();
 			if (child_pid == -1)
 			{
@@ -57,7 +59,10 @@ int main(void)
 			else if (child_pid == 0)
 			{
 				if (execve(f_av, av, NULL) == -1)
+				{
 					perror("execve error");
+					exit (0);
+				}
 			}
 			else
 			{
@@ -68,4 +73,5 @@ int main(void)
 	}
 	free(buffer);
 	return (0);
+
 }
