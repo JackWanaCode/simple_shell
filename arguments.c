@@ -26,7 +26,7 @@ int main(void)
 		read = getline(&buffer, &size, stdin);
 		if (read == -1)
 		{
-			perror ("ERROR!");
+			perror ("getline ERROR!");
 			status = 0;
 		}
 		else if (read == 0)
@@ -35,7 +35,7 @@ int main(void)
 		{
 			arguments = malloc(sizeof(char) * size);
 			string_split(buffer, arguments, read);
-			if (_strcmp(arguments[0], "cd") == 0)
+/*			if (_strcmp(arguments[0], "cd") == 0)
 			{
 				if (arguments[1] == NULL)
 					perror ("Error");
@@ -44,23 +44,24 @@ int main(void)
 						perror("Error");
 				continue;
 			}
-			_strcpy(f_av1, "/bin/");
+*/			_strcpy(f_av1, "/bin/");
 			_strcpy(f_av2, "/usr/bin/");
 			f_av = argv_check(arguments[0], arguments[1], f_av1, f_av2);
 			/* fork the program */
 			child_pid = fork();
 			if (child_pid == -1)
 			{
-				perror("Error:");
+				perror("fork Error:");
 				return (1);
 			}
 			else if (child_pid == 0)
 			{
-
-				if (execve(f_av, arguments, NULL) != -1)
-					free(arguments);
-				else
-						perror("Error:");
+				printf("%s\n", f_av);
+				if (execve(f_av, arguments, NULL) == -1)
+				{
+						perror("Exceve Error:");
+						free(arguments);
+				}
 			}
 			else
 			{
