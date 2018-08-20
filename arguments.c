@@ -46,8 +46,10 @@ int main(void)
 			}
 			_strcpy(f_av1, "/bin/");
 			_strcpy(f_av2, "/usr/bin/");
+			printf("%s\n", av[0]);
 			f_av = argv_check(av[0], av[1], f_av1, f_av2);
-/* fork the program */
+
+			/* fork the program */
 			child_pid = fork();
 			if (child_pid == -1)
 			{
@@ -59,7 +61,11 @@ int main(void)
 				if (execve(f_av, av, NULL) == -1)
 				{
 					perror("execve error");
+<<<<<<< HEAD
 					free(av);
+=======
+					exit (0);
+>>>>>>> 9fc59eb4e12f746879c761dc176ac43c844a5f34
 				}
 			}
 			else
@@ -71,4 +77,5 @@ int main(void)
 	}
 	free(buffer);
 	return (0);
+
 }
