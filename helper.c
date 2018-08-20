@@ -26,6 +26,7 @@ int string_split(char *buffer, char **array, int read)
 			j = i + 1;
 			k++;
 		}
+		array[k] = NULL;
 	}
 	return (k);
 }
