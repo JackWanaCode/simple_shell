@@ -67,5 +67,6 @@ int main(void)
 		}
 		free(arguments);
 	}
+	free(buffer);
 	return (0);
 }
