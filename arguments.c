@@ -58,7 +58,10 @@ int main(void)
 			{
 
 				if (execve(f_av, arguments, NULL) == -1)
+				{
 					perror("execve error");
+					free(av);
+				}
 			}
 			else
 			{
