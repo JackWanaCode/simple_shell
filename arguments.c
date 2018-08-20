@@ -17,7 +17,7 @@ int main(void)
 	char *f_av = NULL;
 	char f_av1[BUFSIZE];
 	char f_av2[BUFSIZE];
-	char **arguments = NULL;
+	char **av = NULL;
 	pid_t child_pid;
 
 	while(status)
@@ -26,38 +26,37 @@ int main(void)
 		read = getline(&buffer, &size, stdin);
 		if (read == -1)
 		{
-			perror ("ERROR!");
+			perror ("getline ERROR!");
 			status = 0;
 		}
 		else if (read == 0)
 			status = 0;
 		else
 		{
-			arguments = malloc(sizeof(char) * read);
-			string_split(buffer, arguments, read);
-			if (_strcmp(arguments[0], "cd") == 0)
+			av = malloc(sizeof(char) * size);
+			string_split(buffer, av, read);
+			if (_strcmp(av[0], "cd") == 0)
 			{
-				if (arguments[1] == NULL)
+				if (av[1] == NULL)
 					perror ("Error");
 				else
-					if (chdir(arguments[1]) != 0)
+					if (chdir(av[1]) != 0)
 						perror("Error");
 				continue;
 			}
 			_strcpy(f_av1, "/bin/");
 			_strcpy(f_av2, "/usr/bin/");
-			f_av = argv_check(arguments[0], arguments[1], f_av1, f_av2);
+			f_av = argv_check(av[0], av[1], f_av1, f_av2);
 /* fork the program */
 			child_pid = fork();
 			if (child_pid == -1)
 			{
-				perror("Error:");
+				perror("fork Error:");
 				return (1);
 			}
 			else if (child_pid == 0)
 			{
-
-				if (execve(f_av, arguments, NULL) == -1)
+				if (execve(f_av, av, NULL) == -1)
 					perror("execve error");
 			}
 			else
@@ -65,7 +64,8 @@ int main(void)
 				wait(NULL);
 			}
 		}
-		free(arguments);
+		free(av);
 	}
+	free(buffer);
 	return (0);
 }
