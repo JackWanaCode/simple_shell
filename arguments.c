@@ -4,8 +4,7 @@
 
 int main(void)
 {
-	int status = 1;
-	int read;
+	int read = 0;
 	size_t size = BUFSIZE;
 	char *buffer = NULL;
 	char *f_av = NULL;
@@ -14,23 +13,23 @@ int main(void)
 	char **av = NULL;
 	pid_t child_pid;
 
-	while (status)
+	while (1)
 	{
 		printf("$ ");
 		read = getline(&buffer, &size, stdin);
 		if (read == -1)
-		{
-			perror("getline ERROR!");
-			status = 0;
-		}
-		else if (read == 0)
-			status = 0;
+			break;
 /* If user hits enter, just prompt again */
 		else if (read == 1)
 			continue;
 		else
 		{
 			av = malloc(sizeof(char) * size);
+			if (av == NULL)
+			{
+				free(buffer);
+				return;
+			}
 			string_split(buffer, av, read);
 			if (_strcmp(av[0], "cd") == 0)
 			{
@@ -51,6 +50,7 @@ int main(void)
 			if (child_pid == -1)
 			{
 				perror("fork Error:");
+				free(av);
 				return (1);
 			}
 			else if (child_pid == 0)
@@ -58,17 +58,15 @@ int main(void)
 				if (execve(f_av, av, NULL) == -1)
 				{
 					perror("execve error");
+					free(av);
 					exit(0);
 				}
 			}
 			else
-			{
 				wait(NULL);
-			}
 		}
 		free(av);
 	}
 	free(buffer);
 	return (0);
-
 }
