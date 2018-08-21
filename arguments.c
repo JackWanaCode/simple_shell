@@ -2,24 +2,31 @@
 
 #define BUFSIZE 1024
 
-int main(void)
+int main(int argc, char **argv)
 {
-	int read = 0;
+	int read = 0, count = 0;
 	size_t size = BUFSIZE;
 	char *buffer = NULL;
 	char *f_av = NULL;
-	char f_av1[BUFSIZE];
-	char f_av2[BUFSIZE];
+	char f_av1[BUFSIZE], f_av2[BUFSIZE];
 	char **av = NULL;
 	pid_t child_pid;
+	char *readcwd = NULL, *prev_cwd = NULL, *cur_cwd = NULL;
 
-	while (1)
+	(void)argc;
+	while (++count)
 	{
-		printf("$ ");
+		readcwd = getcwd(NULL, BUFSIZE);
+		prev_cwd = cur_cwd;
+		cur_cwd = readcwd;
+		printf("%s:$ ", readcwd);
 		read = getline(&buffer, &size, stdin);
 		if (read == -1)
+		{
+			_putstring("\n");
 			break;
-/* If user hits enter, just prompt again */
+		}
+		/* If user hits enter, just prompt again */
 		else if (read == 1)
 			continue;
 		else
@@ -28,22 +35,19 @@ int main(void)
 			if (av == NULL)
 			{
 				free(buffer);
-				return;
+				return (1);
 			}
 			string_split(buffer, av, read);
-			if (_strcmp(av[0], "cd") == 0)
+			/* check with built_in funcs */
+			if (built_in(av[0], av[1], prev_cwd) == 1)
 			{
-				if (av[1] == NULL)
-					perror("error");
-				else
-					if (chdir(av[1]) != 0)
-						perror("Error");
 				continue;
 			}
+			/* check the valid of command */
 			_strcpy(f_av1, "/bin/");
 			_strcpy(f_av2, "/usr/bin/");
 			printf("%s\n", av[0]);
-			f_av = argv_check(av[0], av[1], f_av1, f_av2);
+			f_av = argv_check(av[0], f_av1, f_av2);
 
 			/* fork the program */
 			child_pid = fork();
@@ -55,9 +59,10 @@ int main(void)
 			}
 			else if (child_pid == 0)
 			{
+				/* run the valid command */
 				if (execve(f_av, av, NULL) == -1)
 				{
-					perror("execve error");
+					printf("%s: %d: %s: not found\n", argv[0], count, av[0]);
 					free(av);
 					exit(0);
 				}
@@ -67,6 +72,7 @@ int main(void)
 		}
 		free(av);
 	}
+	free(readcwd);
 	free(buffer);
 	return (0);
 }
