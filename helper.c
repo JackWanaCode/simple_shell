@@ -44,11 +44,12 @@ char *argv_check(char *av1, char *av2, char *f_av1, char *f_av2)
 
 	/* handle exit function */
 	if (_strcmp(av1, "exit") == 0)
+	{
 		if (av2 == NULL)
 			exit(0);
 		else
 			exit(_stoi(av2));
-
+	}
 	/* handle local functions */
 	if (stat(av1, &st) == 0)
 		return (av1);
