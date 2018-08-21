@@ -37,22 +37,22 @@ int string_split(char *buffer, char **array, int read)
  */
 char *argv_check(char *av1, char *f_av1, char *f_av2)
 {
-	struct stat st;
+        struct stat st;
 
-	/* handle local functions */
-	if (stat(av1, &st) == 0)
-		return (av1);
+        /* handle local functions */
+        if (stat(av1, &st) == 0)
+                return (av1);
 
-	/* else case */
-	_strcat(f_av1, av1);
-	if (stat(f_av1, &st) == 0)
-		return (f_av1);
-	_strcat(f_av2, av1);
-	if (stat(f_av2, &st) == 0)
-		return (f_av2);
+        /* else case */
+        _strcat(f_av1, av1);
+        if (stat(f_av1, &st) == 0)
+                return (f_av1);
+        _strcat(f_av2, av1);
+        if (stat(f_av2, &st) == 0)
+                return (f_av2);
 
-	/* return av1 by default */
-	return (av1);
+        /* return av1 by default */
+        return (av1);
 }
 
 /**
