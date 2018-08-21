@@ -31,6 +31,9 @@ int main(void)
 		}
 		else if (read == 0)
 			status = 0;
+/* If user hits enter, just prompt again */
+		else if (read == 1)
+			continue;
 		else
 		{
 			av = malloc(sizeof(char) * size);
@@ -38,7 +41,7 @@ int main(void)
 			if (_strcmp(av[0], "cd") == 0)
 			{
 				if (av[1] == NULL)
-					perror ("Error");
+					perror("error");
 				else
 					if (chdir(av[1]) != 0)
 						perror("Error");
