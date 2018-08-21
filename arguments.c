@@ -1,11 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <sys/stat.h>
 #include "shell.h"
+
 #define BUFSIZE 1024
 
 int main(void)
@@ -20,13 +14,13 @@ int main(void)
 	char **av = NULL;
 	pid_t child_pid;
 
-	while(status)
+	while (status)
 	{
 		printf("$ ");
 		read = getline(&buffer, &size, stdin);
 		if (read == -1)
 		{
-			perror ("getline ERROR!");
+			perror("getline ERROR!");
 			status = 0;
 		}
 		else if (read == 0)
@@ -64,7 +58,7 @@ int main(void)
 				if (execve(f_av, av, NULL) == -1)
 				{
 					perror("execve error");
-					exit (0);
+					exit(0);
 				}
 			}
 			else
