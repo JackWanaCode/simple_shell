@@ -17,7 +17,8 @@ int main(int argc, char **argv)
 	while (++count)
 	{
 		readcwd = getcwd(NULL, BUFSIZE);
-		prev_cwd = cur_cwd;
+		if (prev_cwd == NULL || _strcmp(cur_cwd, readcwd) != 0)
+			prev_cwd = cur_cwd;
 		cur_cwd = readcwd;
 		printf("%s:$ ", readcwd);
 		read = getline(&buffer, &size, stdin);

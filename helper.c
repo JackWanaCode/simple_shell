@@ -86,18 +86,18 @@ int built_in(char *av1, char *av2, char *prev_cwd)
 			if ((av2 == NULL) || (_strcmp(av2, "$HOME") == 0))
 			{
 				chdir(str);
-				setenv("PWD", str, 1);
+				_setenv("PWD", str, 1);
 			}
 			else if (_strcmp(av2, "-") == 0)
 			{
 				chdir(prev_cwd);
-				setenv("PWD", prev_cwd, 1);
+				_setenv("PWD", prev_cwd, 1);
 			}
 			else if (chdir(av2) == 0)
 			{
 				_strcat(str, "/");
 				_strcat(str, av2);
-				setenv("PWD", str, 1);
+				_setenv("PWD", str, 1);
 			}
 			else
 				perror("Error");
@@ -140,4 +140,35 @@ char *_getenv(const char *name)
                 i++;
         }
         return (NULL);
+}
+
+/**
+ * _getenv - Entry Point
+ * Description: get the value of environment.
+ * @name: name of environment
+ * Return: string of value of environment.
+  */
+int _setenv(const char *name, const char *value, int overwrite)
+{
+        int i = 0, j = 0, len = 0;
+
+        for (len = 0; name[len] != '\0'; len++)
+                ;
+        while (environ[i] && overwrite > 0)
+        {
+                for (j = 0; environ[i][j] == name[j]; j++)
+                        ;
+                if (j == len)
+		{
+			environ[i][len] = '=';
+			for (j = 0; value[j] != '\0'; j++)
+			{
+				environ[i][len + j + 1] = value[j];
+			}
+			environ[i][len + j + 1] = '\0';
+			break;
+		}
+                i++;
+        }
+        return (0);
 }

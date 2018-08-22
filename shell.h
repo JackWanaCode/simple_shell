@@ -18,5 +18,7 @@ int _stoi(char *s);
 int _putstring(char *str);
 int built_in(char *av1, char *av2, char *prev_cwd);
 char *_getenv(const char *name);
+int _setenv(const char *name, const char *value, int overwrite);
+
 
 #endif
