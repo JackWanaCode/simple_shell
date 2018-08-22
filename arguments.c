@@ -12,28 +12,33 @@ int main(int argc, char **argv)
 	char **av = NULL;
 	pid_t child_pid;
 	char *readcwd = NULL, *prev_cwd = NULL, *cur_cwd = NULL;
-
 	(void)argc;
+
 	while (++count)
 	{
 		readcwd = getcwd(NULL, BUFSIZE);
 		prev_cwd = cur_cwd;
 		cur_cwd = readcwd;
-		printf("%s:$ ", readcwd);
+		printf("$ ");
 		read = getline(&buffer, &size, stdin);
 		if (read == -1)
 		{
 			_putstring("\n");
+			free(readcwd);
 			break;
 		}
 		/* If user hits enter, just prompt again */
 		else if (read == 1)
+		{
+			free(readcwd);
 			continue;
+		}
 		else
 		{
 			av = malloc(sizeof(char) * size);
 			if (av == NULL)
 			{
+				free(readcwd);
 				free(buffer);
 				return (1);
 			}
@@ -41,12 +46,14 @@ int main(int argc, char **argv)
 			/* check with built_in funcs */
 			if (built_in(av[0], av[1], prev_cwd) == 1)
 			{
-				continue;
+/*				free(readcwd);
+                                free(buffer);
+				free(av);
+*/				continue;
 			}
 			/* check the valid of command */
 			_strcpy(f_av1, "/bin/");
 			_strcpy(f_av2, "/usr/bin/");
-			printf("%s\n", av[0]);
 			f_av = argv_check(av[0], f_av1, f_av2);
 
 			/* fork the program */
@@ -55,6 +62,8 @@ int main(int argc, char **argv)
 			{
 				perror("fork Error:");
 				free(av);
+				free(buffer);
+				free(readcwd);
 				return (1);
 			}
 			else if (child_pid == 0)
@@ -64,6 +73,8 @@ int main(int argc, char **argv)
 				{
 					printf("%s: %d: %s: not found\n", argv[0], count, av[0]);
 					free(av);
+					free(buffer);
+					free(readcwd);
 					exit(0);
 				}
 			}
@@ -71,8 +82,8 @@ int main(int argc, char **argv)
 				wait(NULL);
 		}
 		free(av);
+		free(readcwd);
 	}
-	free(readcwd);
 	free(buffer);
 	return (0);
 }
