@@ -22,6 +22,7 @@ typedef struct list_s
         struct list_s *next;
 } list_t;
 
+extern char **environ;
 int string_split(char *buffer, char **array, int read);
 char *argv_check(char *av1, char *f_av1, char *f_av2);
 char *_strcat(char *dest, char *src);

@@ -1,7 +1,5 @@
 #include "shell.h"
 
-extern char **environ;
-
 /**
  * string_split - Entry Point
  * Description: split a string of string into array of pointer
@@ -37,29 +35,32 @@ int string_split(char *buffer, char **array, int read)
  */
 char *argv_check(char *av1, char *f_av1, char *f_av2)
 {
-        struct stat st;
+	struct stat st;
 
-        /* handle local functions */
-        if (stat(av1, &st) == 0)
-                return (av1);
+/* handle local functions */
+	if (stat(av1, &st) == 0)
+		return (av1);
 
-        /* else case */
-        _strcat(f_av1, av1);
-        if (stat(f_av1, &st) == 0)
-                return (f_av1);
-        _strcat(f_av2, av1);
-        if (stat(f_av2, &st) == 0)
-                return (f_av2);
+/* else case */
+	_strcat(f_av1, av1);
+	if (stat(f_av1, &st) == 0)
+		return (f_av1);
+	_strcat(f_av2, av1);
+	if (stat(f_av2, &st) == 0)
+		return (f_av2);
 
-        /* return av1 by default */
-        return (av1);
+/* return av1 by default */
+	return (av1);
 }
 
 /**
- * built_in - Entry Point
- * Description: check the valid built_in function and run it.
- * @name: name of function
+ * built_in - Entry point.
+ * Description: Check for valid built_in function and run it.
+ * @av1: the first argument passed.
+ * @av2: the second argument passed.
+ * @prev_cwd: the previous working  directory.
  * Return: 1 if valid, else 0;
+<<<<<<< HEAD
 */
 int built_in(char *av1, char *av2)
 {
@@ -68,9 +69,9 @@ int built_in(char *av1, char *av2)
 	if (_strcmp(av1, "exit") == 0)
 	{
 		if (av2 == NULL)
-                        exit(0);
-                else
-                        exit(_stoi(av2));
+			exit(0);
+		else
+			exit(_stoi(av2));
 		return (1);
 	}
 
@@ -78,6 +79,7 @@ int built_in(char *av1, char *av2)
 	if (_strcmp(av1, "env") == 0)
 	{
 		int i = 0;
+
 		while (environ[i])
 		{
 			_putstring(environ[i++]);
@@ -96,38 +98,40 @@ int built_in(char *av1, char *av2)
  */
 char *_getenv(const char *name)
 {
-        int i = 0, j = 0, len = 0;
+	int i = 0, j = 0, len = 0;
 
-        for (len = 0; name[len] != '\0'; len++)
-                ;
-        while (environ[i])
-        {
-                for (j = 0; environ[i][j] == name[j]; j++)
-                        ;
-                if (j == len)
-                        return (&environ[i][len + 1]);
-                i++;
-        }
-        return (NULL);
+	for (len = 0; name[len] != '\0'; len++)
+		;
+	while (environ[i])
+	{
+		for (j = 0; environ[i][j] == name[j]; j++)
+			;
+		if (j == len)
+			return (&environ[i][len + 1]);
+		i++;
+	}
+	return (NULL);
 }
 
 /**
- * _getenv - Entry Point
- * Description: get the value of environment.
- * @name: name of environment
- * Return: string of value of environment.
+ * _setenv - Entry Point
+* Description: get the value of environment.
+* @name: name of environment.
+* @value: string of the value.
+* @overwrite: Determines when to overwrite.
+* Return: string of value of environment.
   */
 int _setenv(const char *name, const char *value, int overwrite)
 {
-        int i = 0, j = 0, len = 0;
+	int i = 0, j = 0, len = 0;
 
-        for (len = 0; name[len] != '\0'; len++)
-                ;
-        while (environ[i] && overwrite > 0)
-        {
-                for (j = 0; environ[i][j] == name[j]; j++)
-                        ;
-                if (j == len)
+	for (len = 0; name[len] != '\0'; len++)
+		;
+	while (environ[i] && overwrite > 0)
+	{
+		for (j = 0; environ[i][j] == name[j]; j++)
+			;
+		if (j == len)
 		{
 			environ[i][len] = '=';
 			for (j = 0; value[j] != '\0'; j++)
@@ -137,9 +141,9 @@ int _setenv(const char *name, const char *value, int overwrite)
 			environ[i][len + j + 1] = '\0';
 			break;
 		}
-                i++;
-        }
-        return (0);
+		i++;
+	}
+	return (0);
 }
 
 char *change_dir(char *av2, char *prev_cwd)
