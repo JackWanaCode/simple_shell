@@ -61,9 +61,8 @@ char *argv_check(char *av1, char *f_av1, char *f_av2)
  * @name: name of function
  * Return: 1 if valid, else 0;
 */
-int built_in(char *av1, char *av2, char *prev_cwd)
+int built_in(char *av1, char *av2)
 {
-	char str[1024];
 
 	/* exit function */
 	if (_strcmp(av1, "exit") == 0)
@@ -72,36 +71,6 @@ int built_in(char *av1, char *av2, char *prev_cwd)
                         exit(0);
                 else
                         exit(_stoi(av2));
-		return (1);
-	}
-
-	/* change dir */
-	if (_strcmp(av1, "cd") == 0)
-	{
-		if (av1 == NULL)
-			perror("error");
-		else
-		{
-			_strcpy(str, _getenv("HOME"));
-			if ((av2 == NULL) || (_strcmp(av2, "$HOME") == 0))
-			{
-				chdir(str);
-				_setenv("PWD", str, 1);
-			}
-			else if (_strcmp(av2, "-") == 0)
-			{
-				chdir(prev_cwd);
-				_setenv("PWD", prev_cwd, 1);
-			}
-			else if (chdir(av2) == 0)
-			{
-				_strcat(str, "/");
-				_strcat(str, av2);
-				_setenv("PWD", str, 1);
-			}
-			else
-				perror("Error");
-		}
 		return (1);
 	}
 
@@ -171,4 +140,43 @@ int _setenv(const char *name, const char *value, int overwrite)
                 i++;
         }
         return (0);
+}
+
+char *change_dir(char *av2, char *prev_cwd)
+{
+	char str[100];
+	char *temp;
+
+	temp = getcwd(NULL, 150);
+
+	if (prev_cwd == NULL)
+		prev_cwd = temp;
+
+	_strcpy(str, _getenv("HOME"));
+	if ((av2 == NULL) || (_strcmp(av2, "$HOME") \
+			      == 0))
+	{
+		chdir(str);
+		prev_cwd = temp;
+		_setenv("PWD", str, 1);
+		return (temp);
+	}
+	else if (_strcmp(av2, "-") == 0)
+	{
+		chdir(prev_cwd);
+		prev_cwd = temp;
+		_setenv("PWD", prev_cwd, 1);
+		return (temp);
+	}
+	else if (chdir(av2) == 0)
+	{
+		prev_cwd = temp;
+		_strcat(str, "/");
+		_strcat(str, av2);
+		_setenv("PWD", str, 1);
+		return (temp);
+	}
+	else
+		perror("Error");
+	return (temp);
 }
