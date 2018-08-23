@@ -16,6 +16,7 @@ char *_strcat(char *dest, char *src);
 char *_strcpy(char *dest, char *src);
 int _strcmp(char *s1, char *s2);
 int _stoi(char *s);
+int _putchar(char c);
 int _putstring(char *str);
 int built_in(char *av1, char *av2);
 char *_getenv(const char *name);

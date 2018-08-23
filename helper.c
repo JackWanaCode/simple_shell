@@ -1,38 +1,14 @@
 #include "shell.h"
 
 /**
- * string_split - Entry Point
- * Description: split a string of string into array of pointer
- * @buffer: source string
- * @array: array of string. Each substring will be stored here
- * @read: number of
- * Return: Returns the number of characters counted, - NULL.
- */
-int string_split(char *buffer, char **array, int read)
-{
-	int i, j, k;
-
-	for (i = 0, k = 0, j = 0; i <= read; i++)
-	{
-		if (buffer[i] == ' ' || buffer[i] == '\n')
-		{
-			buffer[i] = '\0';
-			array[k] = &buffer[j];
-			j = i + 1;
-			k++;
-		}
-		array[k] = NULL;
-	}
-	return (k);
-}
-/**
- * argv_check - Entry Point
- * Description: check status of argument in /bin/ and /usr/bin
+ * argv_check - Entry point
+ * Description: Check status of argument in /bin/ and /usr/bin
  * @av1: First argument from user.
- * @f_av1: string of path: /bin/
- * @f_av2: string of path: /usr/bin/
- * Return: pointer of str that contain valid path. Or, return str of command.
+ * @f_av1: String of path: /bin/
+ * @f_av2: String of path: /usr/bin/
+ * Return: Pointer of str that contain valid path. Or, return str of command.
  */
+
 char *argv_check(char *av1, char *f_av1, char *f_av2)
 {
 	struct stat st;
@@ -56,12 +32,11 @@ char *argv_check(char *av1, char *f_av1, char *f_av2)
 /**
  * built_in - Entry point.
  * Description: Check for valid built_in function and run it.
- * @av1: the first argument passed.
- * @av2: the second argument passed.
- * @prev_cwd: the previous working  directory.
+ * @av1: The first argument passed.
+ * @av2: The second argument passed.
  * Return: 1 if valid, else 0;
-<<<<<<< HEAD
-*/
+ */
+
 int built_in(char *av1, char *av2)
 {
 
@@ -91,11 +66,12 @@ int built_in(char *av1, char *av2)
 }
 
 /**
- * _getenv - Entry Point
- * Description: get the value of environment.
- * @name: name of environment
- * Return: string of value of environment.
+ * _getenv - Entry point
+ * Description: Get the value of environment.
+ * @name: Name of environment
+ * Return: String of value of environment.
  */
+
 char *_getenv(const char *name)
 {
 	int i = 0, j = 0, len = 0;
@@ -114,13 +90,14 @@ char *_getenv(const char *name)
 }
 
 /**
- * _setenv - Entry Point
-* Description: get the value of environment.
-* @name: name of environment.
-* @value: string of the value.
-* @overwrite: Determines when to overwrite.
-* Return: string of value of environment.
-  */
+ * _setenv - Entry point
+ * Description: Get the value of environment.
+ * @name: Name of environment.
+ * @value: String of the value.
+ * @overwrite: Determines when to overwrite.
+ * Return: String of value of environment.
+ */
+
 int _setenv(const char *name, const char *value, int overwrite)
 {
 	int i = 0, j = 0, len = 0;
@@ -145,6 +122,12 @@ int _setenv(const char *name, const char *value, int overwrite)
 	}
 	return (0);
 }
+/**
+ * change_dir - Entry point
+ * @av2: The second argument from the user.
+ * @prev_cwd: The previous working directory
+ * Return: Returns a pointer to the updated directory.
+ */
 
 char *change_dir(char *av2, char *prev_cwd)
 {
@@ -157,8 +140,7 @@ char *change_dir(char *av2, char *prev_cwd)
 		prev_cwd = temp;
 
 	_strcpy(str, _getenv("HOME"));
-	if ((av2 == NULL) || (_strcmp(av2, "$HOME") \
-			      == 0))
+	if ((av2 == NULL) || (_strcmp(av2, "$HOME") == 0))
 	{
 		chdir(str);
 		prev_cwd = temp;

@@ -1,25 +1,6 @@
 #include "shell.h"
 
 /**
- * _putstring - prints a string.
- * @str: The string to be printed.
- * Return: Number of chars. printed.
- */
-
-int _putstring(char *str)
-{
-	int i = 0;
-
-	while (str[i] != '\0')
-	{
-		putchar(str[i]);
-		i++;
-	}
-	putchar('\0');
-	return (i);
-}
-
-/**
  * _strcat - Entry point
  * Description: concatenate a string from source to destination.
  * @dest: destination string.
