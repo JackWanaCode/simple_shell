@@ -128,8 +128,8 @@ int _setenv(const char *name, const char *value, int overwrite)
  * @prev_cwd: The previous working directory
  * Return: Returns a pointer to the updated directory.
  */
-
-char *change_dir(char *av2, char *prev_cwd)
+char *prev_cwd;
+char *change_dir(char *av2)
 {
 	char str[100];
 	char *temp;

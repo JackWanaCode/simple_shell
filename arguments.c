@@ -1,11 +1,13 @@
 #include "shell.h"
 
+char *prev_cwd;
 int main()
 {
 	char *buffer = NULL;
 	int read = 0;
 	size_t size = 1024;
 	int status = 1;
+	prev_cwd = getcwd(NULL, 150);
 
 	while (status)
 	{
@@ -28,5 +30,6 @@ int main()
 	}
 	if (buffer)
 		free(buffer);
+	free(prev_cwd);
 	return (0);
 }

@@ -15,7 +15,6 @@ int exec_function(char *buffer, int read)
 	char f_av1[500], f_av2[500];
 	char **av = NULL;
 	pid_t child_pid;
-	char *prev_cwd = NULL;
 	char *cdtemp = NULL;
 
 	av = malloc(sizeof(char) * 500);
@@ -28,10 +27,12 @@ int exec_function(char *buffer, int read)
 	/* check cd */
 	if (_strcmp(av[0], "cd") == 0)
 	{
-		cdtemp = change_dir(av[1], prev_cwd);
+		cdtemp = change_dir(av[1]);
 		free(av);
+/*		printf("cdtemp bf free: %s\n", cdtemp);
 		free(cdtemp);
-		return (0);
+		printf("cdtemp af free: %s\n", cdtemp);
+*/		return (0);
 	} /* check exit and env */
 	else if (_strcmp(av[0], "exit") == 0)
 	{

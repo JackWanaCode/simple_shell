@@ -10,6 +10,7 @@
 #include <sys/wait.h>
 
 extern char **environ;
+extern char *prev_cwd;
 int string_split(char *buffer, char **array, int read);
 char *argv_check(char *av1, char *f_av1, char *f_av2);
 char *_strcat(char *dest, char *src);
@@ -22,6 +23,6 @@ int built_in(char *av1, char *av2);
 char *_getenv(const char *name);
 int _setenv(const char *name, const char *value, int overwrite);
 int exec_function(char *buffer, int read);
-char *change_dir(char *av2, char *prev_cwd);
+char *change_dir(char *av2);
 
 #endif
