@@ -57,6 +57,13 @@ int exec_function(char *buffer, int read)
 		/* run the valid command */
 		if (execve(f_av, av, NULL) == -1)
 		{
+			write(1, f_av, _strlen(f_av));
+                        write(1, ": ", 2);
+                        print_num();
+                        write(1, ": ", 2);
+                        write(1, av[0], read);
+                        write(1, ": ", 2);
+                        _putstring("not found\n");
 			free(av);
  			exit(0);
 		}

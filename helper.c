@@ -39,28 +39,36 @@ char *argv_check(char *av1, char *f_av1, char *f_av2)
 
 int built_in(char *av1, char *av2)
 {
+	int i;
 
 	/* exit function */
 	if (_strcmp(av1, "exit") == 0)
 	{
+		i = _stoi(av2);
 		if (av2 == NULL)
 		{
-			free(&av1[0]);
+/*			free(&av1[0]);
 			free(prev_cwd);
-			exit(0);
+*/			exit(0);
 		}
 		else
 		{
-			free(&av1[0]);
-			free(prev_cwd);
-			exit(_stoi(av2));
+			if (_stoi(av2) >= 0)
+			{
+				i = _stoi(av2);
+/*				free(&av1[0]);
+				free(prev_cwd);
+*/				exit(i);
+			}
+			else
+				exit(0);
 		}
 	}
 
 	/* env */
 	if (_strcmp(av1, "env") == 0)
 	{
-		int i = 0;
+		i = 0;
 
 		while (environ[i])
 		{
@@ -135,8 +143,8 @@ int _setenv(const char *name, const char *value, int overwrite)
  * @prev_cwd: The previous working directory
  * Return: Returns a pointer to the updated directory.
  */
-char *prev_cwd;
-void *change_dir(char *av2)
+
+void change_dir(char *av2)
 {
 	char str[100];
 	char *temp;
@@ -167,5 +175,5 @@ void *change_dir(char *av2)
 		_setenv("PWD", str, 1);
 	}
 	else
-		perror("path not found");
+		_putstring("path not found\n");
 }

@@ -79,7 +79,9 @@ int _stoi(char *s)
 
 	for (; s[i] != '\0'; i++)
 	{
-		n = n * 10 + (s[i] - '0');
+/*		if (s[i] > '9' || s[i] < '0')
+			return (-1);
+*/		n = n * 10 + (s[i] - '0');
 	}
 	return (n);
 }
