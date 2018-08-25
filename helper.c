@@ -44,10 +44,17 @@ int built_in(char *av1, char *av2)
 	if (_strcmp(av1, "exit") == 0)
 	{
 		if (av2 == NULL)
+		{
+			free(&av1[0]);
+			free(prev_cwd);
 			exit(0);
+		}
 		else
+		{
+			free(&av1[0]);
+			free(prev_cwd);
 			exit(_stoi(av2));
-		return (1);
+		}
 	}
 
 	/* env */
@@ -129,40 +136,36 @@ int _setenv(const char *name, const char *value, int overwrite)
  * Return: Returns a pointer to the updated directory.
  */
 char *prev_cwd;
-char *change_dir(char *av2)
+void *change_dir(char *av2)
 {
 	char str[100];
 	char *temp;
 
 	temp = getcwd(NULL, 150);
 
-	if (prev_cwd == NULL)
-		prev_cwd = temp;
-
 	_strcpy(str, _getenv("HOME"));
 	if ((av2 == NULL) || (_strcmp(av2, "$HOME") == 0))
 	{
 		chdir(str);
+		free(prev_cwd);
 		prev_cwd = temp;
 		_setenv("PWD", str, 1);
-		return (temp);
 	}
 	else if (_strcmp(av2, "-") == 0)
 	{
 		chdir(prev_cwd);
+		free(prev_cwd);
 		prev_cwd = temp;
 		_setenv("PWD", prev_cwd, 1);
-		return (temp);
 	}
 	else if (chdir(av2) == 0)
 	{
+		free(prev_cwd);
 		prev_cwd = temp;
 		_strcat(str, "/");
 		_strcat(str, av2);
 		_setenv("PWD", str, 1);
-		return (temp);
 	}
 	else
-		perror("Error");
-	return (temp);
+		perror("path not found");
 }

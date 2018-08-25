@@ -23,6 +23,8 @@ int built_in(char *av1, char *av2);
 char *_getenv(const char *name);
 int _setenv(const char *name, const char *value, int overwrite);
 int exec_function(char *buffer, int read);
-char *change_dir(char *av2);
+void *change_dir(char *av2);
+void string_mod(char *str);
+
 
 #endif

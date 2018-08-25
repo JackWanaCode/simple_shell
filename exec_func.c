@@ -15,29 +15,24 @@ int exec_function(char *buffer, int read)
 	char f_av1[500], f_av2[500];
 	char **av = NULL;
 	pid_t child_pid;
-	char *cdtemp = NULL;
 
-	av = malloc(sizeof(char) * 500);
+	av = malloc(sizeof(char *) * 3);
 	if (av == NULL)
 	{
 		return (1);
 	}
 	string_split(buffer, av, read);
-
+	for (int i = 0; av[i] != NULL; i++)
+		printf("av[%i] is %s\n", i, av[i]);
 	/* check cd */
 	if (_strcmp(av[0], "cd") == 0)
 	{
-		cdtemp = change_dir(av[1]);
+		change_dir(av[1]);
 		free(av);
-/*		printf("cdtemp bf free: %s\n", cdtemp);
-		free(cdtemp);
-		printf("cdtemp af free: %s\n", cdtemp);
-*/		return (0);
+ 		return (0);
 	} /* check exit and env */
 	else if (_strcmp(av[0], "exit") == 0)
 	{
-		/*	free(buffer);
-			free(av); */
 		built_in(av[0], av[1]);
 	}
 	else if (built_in(av[0], av[1]) == 1)
@@ -56,7 +51,7 @@ int exec_function(char *buffer, int read)
 	if (child_pid == -1)
 	{
 		free(av);
-		perror("fork Error:");
+ 		perror("fork Error:");
 		return (1);
 	}
 	else if (child_pid == 0)
@@ -65,7 +60,7 @@ int exec_function(char *buffer, int read)
 		if (execve(f_av, av, NULL) == -1)
 		{
 			free(av);
-			exit(0);
+ 			exit(0);
 		}
 	}
 	else
