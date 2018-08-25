@@ -39,37 +39,32 @@ char *argv_check(char *av1, char *f_av1, char *f_av2)
 
 int built_in(char *av1, char *av2)
 {
-	int i;
+	int i = 0;
 
-	/* exit function */
 	if (_strcmp(av1, "exit") == 0)
 	{
-		i = _stoi(av2);
 		if (av2 == NULL)
 		{
-/*			free(&av1[0]);
+			free(&av1[0]);
 			free(prev_cwd);
-*/			exit(0);
+			exit(0);
 		}
 		else
 		{
-			if (_stoi(av2) >= 0)
+			i = _stoi(av2);
+			if (i >= 0)
 			{
-				i = _stoi(av2);
-/*				free(&av1[0]);
+				free(&av1[0]);
 				free(prev_cwd);
-*/				exit(i);
+				exit(i);
 			}
 			else
 				exit(0);
 		}
 	}
 
-	/* env */
 	if (_strcmp(av1, "env") == 0)
 	{
-		i = 0;
-
 		while (environ[i])
 		{
 			_putstring(environ[i++]);
@@ -140,18 +135,16 @@ int _setenv(const char *name, const char *value, int overwrite)
 /**
  * change_dir - Entry point
  * @av2: The second argument from the user.
- * @prev_cwd: The previous working directory
  * Return: Returns a pointer to the updated directory.
  */
 
 void change_dir(char *av2)
 {
 	char str[100];
-	char *temp;
-
-	temp = getcwd(NULL, 150);
+	char *temp = getcwd(NULL, 150);
 
 	_strcpy(str, _getenv("HOME"));
+
 	if ((av2 == NULL) || (_strcmp(av2, "$HOME") == 0))
 	{
 		chdir(str);

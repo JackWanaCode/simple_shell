@@ -12,6 +12,7 @@
 extern char **environ;
 extern char *prev_cwd;
 extern int count;
+
 int string_split(char *buffer, char **array, int read);
 char *argv_check(char *av1, char *f_av1, char *f_av2);
 char *_strcat(char *dest, char *src);
@@ -26,7 +27,7 @@ int _setenv(const char *name, const char *value, int overwrite);
 int exec_function(char *buffer, int read);
 void change_dir(char *av2);
 void string_mod(char *str);
-void print_num();
+void print_num(void);
 int _strlen(char *s);
 
 
