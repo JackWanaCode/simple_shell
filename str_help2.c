@@ -43,9 +43,7 @@ int string_split(char *buffer, char **array, int read)
 {
 	int i, j, k;
 
-	printf("bf buffer is %s\n", buffer);
 	string_mod(buffer);
-	printf("af buffer is %s\n", buffer);
 	for (i = 0, k = 0, j = 0; i <= read; i++)
 	{
 		if (buffer[i] == ' ' || buffer[i] == '\n')
@@ -66,23 +64,63 @@ int string_split(char *buffer, char **array, int read)
  * @str: Source string.
  * Return: nothing
  */
+
 void string_mod(char *str)
 {
-	int i = 0, j = 0;
+        int i = 0, j = 0;
 
-	for (i = 0; str[i] != '\0';)
-	{
-		while (str[i] == ' ')
-			i++;
-		while (str[i] != ' ' && str[i] != '\0')
-		{
-			str[j] = str[i];
-			j++;
-			i++;
-		}
-		if (str[i] != '\0')
-			str[j++] = ' ';
-	}
-	while (str[j] != '\0')
-		str[j++] = '\0';
+        for (i = 0; str[i] != '\0';)
+        {
+                while (str[i] == ' ')
+                        i++;
+                while (str[i] != ' ' && str[i] != '\0')
+                {
+                        str[j] = str[i];
+                        j++;
+                        i++;
+                }
+                if (str[i] != '\0')
+                        str[j++] = ' ';
+        }
+        while (str[j] != '\0')
+                str[j++] = '\0';
+}
+
+
+/**
+ * print_num - prints a number as int type
+ * @num: string of numbers as int type
+ * Return: number of character(s) are printed
+ */
+void print_num(void)
+{
+        int max_digit_int = 1000000000;
+        int temp_num = 0;
+        int num = count;
+
+        while (num / max_digit_int == 0)
+                max_digit_int /= 10;
+        while (max_digit_int > 0)
+        {
+                temp_num = num / max_digit_int;
+                num = num % max_digit_int;
+                _putchar(temp_num + '0');
+                max_digit_int /= 10;
+        }
+}
+
+/**
+ * _strlen - Entry point
+ * Description: return length of a string.
+ * @s:  string is to be checked.
+ *
+ * Return: string length value
+ */
+int _strlen(char *s)
+{
+        int ct = 0;
+
+        while (*(s + ct) != '\0')
+                ct++;
+        return (ct);
 }

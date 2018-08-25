@@ -1,5 +1,6 @@
 #include "shell.h"
 
+int count;
 char *prev_cwd;
 int main()
 {
@@ -11,6 +12,7 @@ int main()
 
 	while (status)
 	{
+		count++;
 		_putstring("$ ");
 		read = getline(&buffer, &size, stdin);
 		if (read != 1 && read != -1)
@@ -23,8 +25,6 @@ int main()
 		}
 		else if (read == -1)
 		{
-			printf("read is %i\n", read);
-			_putstring("read = -1: Error\n");
 			status = 0;
 		}
 	}
