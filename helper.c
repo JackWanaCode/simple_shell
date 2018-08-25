@@ -39,8 +39,8 @@ char *argv_check(char *av1, char *f_av1, char *f_av2)
 
 int built_in(char *av1, char *av2)
 {
+	int i = 0;
 
-	/* exit function */
 	if (_strcmp(av1, "exit") == 0)
 	{
 		if (av2 == NULL)
@@ -51,17 +51,20 @@ int built_in(char *av1, char *av2)
 		}
 		else
 		{
-			free(&av1[0]);
-			free(prev_cwd);
-			exit(_stoi(av2));
+			i = _stoi(av2);
+			if (i >= 0)
+			{
+				free(&av1[0]);
+				free(prev_cwd);
+				exit(i);
+			}
+			else
+				exit(0);
 		}
 	}
 
-	/* env */
 	if (_strcmp(av1, "env") == 0)
 	{
-		int i = 0;
-
 		while (environ[i])
 		{
 			_putstring(environ[i++]);
@@ -132,18 +135,16 @@ int _setenv(const char *name, const char *value, int overwrite)
 /**
  * change_dir - Entry point
  * @av2: The second argument from the user.
- * @prev_cwd: The previous working directory
  * Return: Returns a pointer to the updated directory.
  */
-char *prev_cwd;
-void *change_dir(char *av2)
+
+void change_dir(char *av2)
 {
 	char str[100];
-	char *temp;
-
-	temp = getcwd(NULL, 150);
+	char *temp = getcwd(NULL, 150);
 
 	_strcpy(str, _getenv("HOME"));
+
 	if ((av2 == NULL) || (_strcmp(av2, "$HOME") == 0))
 	{
 		chdir(str);
@@ -167,5 +168,5 @@ void *change_dir(char *av2)
 		_setenv("PWD", str, 1);
 	}
 	else
-		perror("path not found");
+		_putstring("path not found\n");
 }

@@ -1,6 +1,17 @@
 #include "shell.h"
 
 /**
+ * _putchar - Prints a char.
+ * @c: The character to print.
+ * Return: Returns the written char.
+ */
+
+int _putchar(char c)
+{
+	return (write(1, &c, 1));
+}
+
+/**
  * _strcat - Entry point
  * Description: concatenate a string from source to destination.
  * @dest: destination string.
@@ -33,14 +44,13 @@ char *_strcat(char *dest, char *src)
  * @src: source of string.
  * Return: Pointer to dest.
  */
+
 char *_strcpy(char *dest, char *src)
 {
 	int i;
 
 	for (i = 0; *(src + i) != '\0'; i++)
-	{
 		*(dest + i) = *(src + i);
-	}
 	*(dest + i) = '\0';
 	return (dest);
 }
@@ -53,6 +63,7 @@ char *_strcpy(char *dest, char *src)
  *
  * Return: equal ? 0 : ascii dif value for the 1st dif numbers.
  */
+
 int _strcmp(char *s1, char *s2)
 {
 	int i;
@@ -73,12 +84,15 @@ int _strcmp(char *s1, char *s2)
  * @s: The string to be convereted to integer.
  * Return: number as an integer type
  */
+
 int _stoi(char *s)
 {
 	int n = 0, i = 0;
 
 	for (; s[i] != '\0'; i++)
 	{
+		if (s[i] > '9' || s[i] < '0')
+			return (-1);
 		n = n * 10 + (s[i] - '0');
 	}
 	return (n);
