@@ -22,8 +22,6 @@ int exec_function(char *buffer, int read)
 		return (1);
 	}
 	string_split(buffer, av, read);
-	for (int i = 0; av[i] != NULL; i++)
-		printf("av[%i] is %s\n", i, av[i]);
 	/* check cd */
 	if (_strcmp(av[0], "cd") == 0)
 	{
