@@ -4,8 +4,8 @@
  * argv_check - Entry point
  * Description: Check status of argument in /bin/ and /usr/bin
  * @av1: First argument from user.
- * @f_av1: String of path: /bin/
- * @f_av2: String of path: /usr/bin/
+ * @f_av1: String of path: /bin/.
+ * @f_av2: String of path: /usr/bin/.
  * Return: Pointer of str that contain valid path. Or, return str of command.
  */
 
@@ -30,11 +30,11 @@ char *argv_check(char *av1, char *f_av1, char *f_av2)
 }
 
 /**
- * built_in - Entry point.
+ * built_in - Entry point
  * Description: Check for valid built_in function and run it.
  * @av1: The first argument passed.
  * @av2: The second argument passed.
- * Return: 1 if valid, else 0;
+ * Return: 1 if valid, else 0.
  */
 
 int built_in(char *av1, char *av2)
@@ -78,7 +78,7 @@ int built_in(char *av1, char *av2)
 /**
  * _getenv - Entry point
  * Description: Get the value of environment.
- * @name: Name of environment
+ * @name: Name of environment.
  * Return: String of value of environment.
  */
 
@@ -122,9 +122,7 @@ int _setenv(const char *name, const char *value, int overwrite)
 		{
 			environ[i][len] = '=';
 			for (j = 0; value[j] != '\0'; j++)
-			{
 				environ[i][len + j + 1] = value[j];
-			}
 			environ[i][len + j + 1] = '\0';
 			break;
 		}

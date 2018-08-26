@@ -3,8 +3,8 @@
  * exec_function - Entry point
  * Description: Execute's program. All programs located in
  * /bin/ /usr/bin, and the functions cd, exit, env.
- * @buffer: a string of arguments.
- * @read: number of character reading.
+ * @buffer: A string of arguments.
+ * @read: Number of character reading.
  * Return: 0. 1 if error.
  */
 
@@ -33,13 +33,10 @@ int exec_function(char *buffer, int read)
 		free(av);
 		return (0);
 	}
-
-	/* check the valid of command */
 	_strcpy(f_av1, "/bin/");
 	_strcpy(f_av2, "/usr/bin/");
 	f_av = argv_check(av[0], f_av1, f_av2);
 
-	/* fork the program */
 	child_pid = fork();
 	if (child_pid == -1)
 	{
@@ -49,7 +46,6 @@ int exec_function(char *buffer, int read)
 	}
 	else if (child_pid == 0)
 	{
-		/* run the valid command */
 		if (execve(f_av, av, NULL) == -1)
 		{
 			write(1, f_av, _strlen(f_av));
