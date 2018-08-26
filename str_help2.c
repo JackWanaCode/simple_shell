@@ -1,7 +1,8 @@
 #include "shell.h"
 
 /**
- * _putstring - Prints a string.
+ * _putstring - Entry point
+ * Description: Prints a string of characters.
  * @str: The string to be printed.
  * Return: Number of chars. printed.
  */
@@ -20,11 +21,11 @@ int _putstring(char *str)
 }
 
 /**
- * string_split - Entry Point
- * Description: Split a string of string into array of pointer
+ * string_split - Entry point
+ * Description: Split a string of string into array of pointer.
  * @buffer: Source string.
  * @array: Array of string. Each substring will be stored here.
- * @read: Number .
+ * @read: Length of the string buffer.
  * Return: Returns the number of characters counted, - NULL.
  */
 
@@ -48,8 +49,9 @@ int string_split(char *buffer, char **array, int read)
 }
 
 /**
- * string_mod - Entry Point
- * Description: Uniq the two or more continous whitespaces.
+ * string_mod - Entry point
+ * Description: Find and remove continous whitespaces, create a string
+ * without extra spaces.
  * @str: Source string.
  * Return: None.
  */
@@ -76,7 +78,8 @@ void string_mod(char *str)
 }
 
 /**
- * print_num - Prints a number as int type.
+ * print_num - Entry point
+ * Description: Prints a number as int type.
  * Return: None.
  */
 void print_num(void)

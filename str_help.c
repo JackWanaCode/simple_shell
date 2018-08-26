@@ -2,6 +2,7 @@
 
 /**
  * _putchar - Prints a char.
+ * Description: Writes a character.
  * @c: The character to print.
  * Return: Returns the written char.
  */
@@ -14,8 +15,8 @@ int _putchar(char c)
 /**
  * _strcat - Entry point
  * Description: concatenate a string from source to destination.
- * @dest: destination string.
- * @src: source string.
+ * @dest: Destination string.
+ * @src: Source string.
  * Return: A pointer to dest.
  */
 
@@ -40,8 +41,8 @@ char *_strcat(char *dest, char *src)
 /**
  * _strcpy - Entry point
  * Description: copy a string to another string.
- * @dest:  str is to be printed after copying.
- * @src: source of string.
+ * @dest: Str is to be printed after copying.
+ * @src: Source of string.
  * Return: Pointer to dest.
  */
 
@@ -57,10 +58,9 @@ char *_strcpy(char *dest, char *src)
 
 /**
  * _strcmp - Entry point
- * Description: compare 2 string, character by character
- * @s1: first string to be compared.
- * @s2: second string for comparing.
- *
+ * Description: compare 2 string, character by character.
+ * @s1: First string to be compared.
+ * @s2: Second string for comparing.
  * Return: equal ? 0 : ascii dif value for the 1st dif numbers.
  */
 
@@ -80,9 +80,9 @@ int _strcmp(char *s1, char *s2)
 
 /**
  * _stoi - Entry point
- * Description:
+ * Description: Converts a string number to an integer.
  * @s: The string to be convereted to integer.
- * Return: number as an integer type
+ * Return: Number as an integer type.
  */
 
 int _stoi(char *s)
