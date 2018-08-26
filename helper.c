@@ -3,30 +3,43 @@
 /**
  * argv_check - Entry point
  * Description: Check status of argument in /bin/ and /usr/bin
- * @av1: First argument from user.
- * @f_av1: String of path: /bin/.
- * @f_av2: String of path: /usr/bin/.
- * Return: Pointer of str that contain valid path. Or, return str of command.
+ * @av0: First argument from user.
+ * @f_av: pointer to a full path of command.
+ * Return: nothing
  */
 
-char *argv_check(char *av1, char *f_av1, char *f_av2)
+void argv_check(char *av0, char *f_av)
 {
 	struct stat st;
+	int i = 0, j = 0;
+	char *str;
 
 /* handle local functions */
-	if (stat(av1, &st) == 0)
-		return (av1);
+	if (stat(av0, &st) == 0)
+	{
+		f_av = av0;
+		return;
+	}
 
 /* else case */
-	_strcat(f_av1, av1);
-	if (stat(f_av1, &st) == 0)
-		return (f_av1);
-	_strcat(f_av2, av1);
-	if (stat(f_av2, &st) == 0)
-		return (f_av2);
+	str = _getenv("PATH");
+        for (i = 0; str[i] != '\0'; i++)
+        {
+                if (str[i] == ':')
+                {
+                        _strcat(f_av, "/");
+                        _strcat(f_av, av0);
+                        if (access(f_av, X_OK) == 0)
+                                return;
+                        _memset(f_av, 0, _strlen(f_av));
+                        j = 0;
+                }
+                else
+                        f_av[j++] = str[i];
+        }
 
 /* return av1 by default */
-	return (av1);
+	f_av = av0;
 }
 
 /**
@@ -153,17 +166,17 @@ void change_dir(char *av2)
 	else if (_strcmp(av2, "-") == 0)
 	{
 		chdir(prev_cwd);
+		_setenv("PWD", prev_cwd, 1);
 		free(prev_cwd);
 		prev_cwd = temp;
-		_setenv("PWD", prev_cwd, 1);
 	}
 	else if (chdir(av2) == 0)
 	{
+		_strcat(str, "/");
+                _strcat(str, av2);
+		_setenv("PWD", str, 1);
 		free(prev_cwd);
 		prev_cwd = temp;
-		_strcat(str, "/");
-		_strcat(str, av2);
-		_setenv("PWD", str, 1);
 	}
 	else
 		_putstring("path not found\n");

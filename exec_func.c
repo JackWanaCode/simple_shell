@@ -10,8 +10,7 @@
 
 int exec_function(char *buffer, int read)
 {
-	char *f_av = NULL;
-	char f_av1[500], f_av2[500];
+	char f_av[100] = {'\0'};
 	char **av = NULL;
 	pid_t child_pid;
 
@@ -33,9 +32,8 @@ int exec_function(char *buffer, int read)
 		free(av);
 		return (0);
 	}
-	_strcpy(f_av1, "/bin/");
-	_strcpy(f_av2, "/usr/bin/");
-	f_av = argv_check(av[0], f_av1, f_av2);
+	_strcpy(f_av, av[0]);
+	argv_check(av[0], f_av);
 
 	child_pid = fork();
 	if (child_pid == -1)

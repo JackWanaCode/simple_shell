@@ -14,7 +14,7 @@ extern char *prev_cwd;
 extern int count;
 
 int string_split(char *buffer, char **array, int read);
-char *argv_check(char *av1, char *f_av1, char *f_av2);
+void argv_check(char *av0, char *f_av);
 char *_strcat(char *dest, char *src);
 char *_strcpy(char *dest, char *src);
 int _strcmp(char *s1, char *s2);
@@ -29,6 +29,7 @@ void change_dir(char *av2);
 void string_mod(char *str);
 void print_num(void);
 int _strlen(char *s);
+char *_memset(char *s, char b, unsigned int n);
 
 
 #endif
