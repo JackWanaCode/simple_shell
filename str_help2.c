@@ -60,7 +60,7 @@ void string_mod(char *str)
 {
 	int i = 0, j = 0;
 
-	for (i = 0; str[i] != '\0';)
+	while(str[i] != '\0')
 	{
 		while (str[i] == ' ')
 			i++;
@@ -82,6 +82,7 @@ void string_mod(char *str)
  * Description: Prints a number as int type.
  * Return: None.
  */
+
 void print_num(void)
 {
 	int max_digit_int = 1000000000;
@@ -105,6 +106,7 @@ void print_num(void)
  * @s: String is to be checked.
  * Return: String length value.
  */
+
 int _strlen(char *s)
 {
 	int ct = 0;
