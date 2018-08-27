@@ -28,8 +28,8 @@ int exec_function(char *buffer, int read)
 		return (0);
 	}
 	else if (_strcmp(av[0], "exit") == 0)
-		built_in(av[0], av[1]);
-	else if (built_in(av[0], av[1]) == 1)
+		built_in(av[0], av[1], av);
+	else if (built_in(av[0], av[1], av) == 1)
 	{
 		free(av);
 		return (0);

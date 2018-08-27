@@ -33,7 +33,7 @@ int exec_function(char *buffer, int read);
 
 /* helper functions for executing program / command */
 void argv_check(char *av0, char *f_av);
-int built_in(char *av1, char *av2);
+int built_in(char *av1, char *av2, char **av);
 char *_getenv(const char *name);
 int _setenv(const char *name, const char *value, int overwrite);
 void change_dir(char *av2);

@@ -50,7 +50,7 @@ void argv_check(char *av0, char *f_av)
  * Return: 1 if valid, else 0.
  */
 
-int built_in(char *av1, char *av2)
+int built_in(char *av1, char *av2, char **av)
 {
 	int i = 0;
 
@@ -58,8 +58,9 @@ int built_in(char *av1, char *av2)
 	{
 		if (av2 == NULL)
 		{
-			free(&av1[0]);
+			free(av1);
 			free(prev_cwd);
+			free(av);
 			exit(0);
 		}
 		else
@@ -67,12 +68,18 @@ int built_in(char *av1, char *av2)
 			i = _stoi(av2);
 			if (i >= 0)
 			{
-				free(&av1[0]);
+				free(av1);
 				free(prev_cwd);
+				free(av);
 				exit(i);
 			}
 			else
+			{
+				free(av1);
+				free(prev_cwd);
+				free(av);
 				exit(0);
+			}
 		}
 	}
 
