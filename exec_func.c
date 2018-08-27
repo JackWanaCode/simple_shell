@@ -32,10 +32,11 @@ int exec_function(char *buffer, int read)
 		free(av);
 		return (0);
 	}
+
 	_strcpy(f_av, av[0]);
 	argv_check(av[0], f_av);
-
 	child_pid = fork();
+
 	if (child_pid == -1)
 	{
 		free(av);
