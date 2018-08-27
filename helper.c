@@ -20,26 +20,24 @@ void argv_check(char *av0, char *f_av)
 		f_av = av0;
 		return;
 	}
-
 /* else case */
 	str = _getenv("PATH");
-        for (i = 0; str[i] != '\0'; i++)
+        do
         {
-                if (str[i] == ':')
+                if (str[i] == ':' || str[i] == '\0')
                 {
                         _strcat(f_av, "/");
                         _strcat(f_av, av0);
                         if (access(f_av, X_OK) == 0)
                                 return;
                         _memset(f_av, 0, _strlen(f_av));
-                        j = 0;
+			j = 0;
                 }
                 else
                         f_av[j++] = str[i];
-        }
-
+        } while (str[i++] != '\0');
 /* return av1 by default */
-	f_av = av0;
+	_strcat(f_av, av0);
 }
 
 /**
@@ -58,9 +56,7 @@ int built_in(char *av1, char *av2, char **av)
 	{
 		if (av2 == NULL)
 		{
-			free(av1);
-			free(prev_cwd);
-			free(av);
+			free_helper(av1, prev_cwd, av);
 			exit(0);
 		}
 		else
@@ -68,21 +64,16 @@ int built_in(char *av1, char *av2, char **av)
 			i = _stoi(av2);
 			if (i >= 0)
 			{
-				free(av1);
-				free(prev_cwd);
-				free(av);
+				free_helper(av1, prev_cwd, av);
 				exit(i);
 			}
 			else
 			{
-				free(av1);
-				free(prev_cwd);
-				free(av);
+				free_helper(av1, prev_cwd, av);
 				exit(0);
 			}
 		}
 	}
-
 	if (_strcmp(av1, "env") == 0)
 	{
 		while (environ[i])
@@ -190,4 +181,20 @@ void change_dir(char *av2)
 		free(temp);
 		_putstring("path not found\n");
 	}
+}
+/**
+ * free_helper - Entry point
+ * Description: A simple funciton to free 3 times, used in
+ * our builtin function.
+ * @av1: First buffer to free.
+ * @cwd: Second buffer to free.
+ * @av: Third buffer to free.
+ * Return: None.
+ */
+
+void free_helper(char *av1, char *cwd, char **av)
+{
+	free(av1);
+	free(cwd);
+	free(av);
 }

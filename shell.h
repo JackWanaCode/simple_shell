@@ -8,10 +8,12 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <sys/wait.h>
+
 /* global variables */
 extern char **environ;
 extern char *prev_cwd;
 extern int count;
+extern char *name;
 
 /* string manipulation */
 int string_split(char *buffer, char **array, int read);
@@ -37,6 +39,6 @@ int built_in(char *av1, char *av2, char **av);
 char *_getenv(const char *name);
 int _setenv(const char *name, const char *value, int overwrite);
 void change_dir(char *av2);
-
+void free_helper(char *av1, char *cwd, char **av);
 
 #endif
