@@ -13,8 +13,10 @@ int exec_function(char *buffer, int read)
 	char f_av[100] = {'\0'};
 	char **av = NULL;
 	pid_t child_pid;
+	int n = 0;
 
-	av = malloc(sizeof(char *) * 1024);
+	n = string_mod(buffer);
+	av = malloc(sizeof(char *) * (n + 1));
 	if (av == NULL)
 		return (1);
 	string_split(buffer, av, read);

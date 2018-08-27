@@ -7,7 +7,7 @@ int main(void)
 {
 	char *buffer = NULL;
 	int read = 0;
-	size_t size = 1024;
+	size_t size = 0;
 	int status = 1;
 
 	prev_cwd = getcwd(NULL, 150);
