@@ -179,5 +179,8 @@ void change_dir(char *av2)
 		prev_cwd = temp;
 	}
 	else
+	{
+		free(temp);
 		_putstring("path not found\n");
+	}
 }

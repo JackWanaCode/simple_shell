@@ -33,8 +33,8 @@ int string_split(char *buffer, char **array, int read)
 {
 	int i, j, k;
 
-	string_mod(buffer);
-	for (i = 0, k = 0, j = 0; i <= read; i++)
+/*	string_mod(buffer);
+ */	for (i = 0, k = 0, j = 0; i <= read; i++)
 	{
 		if (buffer[i] == ' ' || buffer[i] == '\n')
 		{
@@ -56,9 +56,9 @@ int string_split(char *buffer, char **array, int read)
  * Return: None.
  */
 
-void string_mod(char *str)
+int string_mod(char *str)
 {
-	int i = 0, j = 0;
+	int i = 0, j = 0, str_ct = 0, check = 0;
 
 	while(str[i] != '\0')
 	{
@@ -66,15 +66,20 @@ void string_mod(char *str)
 			i++;
 		while (str[i] != ' ' && str[i] != '\0')
 		{
-			str[j] = str[i];
-			j++;
-			i++;
+			check = 1;
+			str[j++] = str[i++];
+		}
+		if (check == 1)
+		{
+			str_ct += 1;
+			check = 0;
 		}
 		if (str[i] != '\0')
 			str[j++] = ' ';
 	}
 	while (str[j] != '\0')
 		str[j++] = '\0';
+	return (str_ct);
 }
 
 /**
