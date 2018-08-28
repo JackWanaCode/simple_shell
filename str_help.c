@@ -1,16 +1,5 @@
 #include "shell.h"
-
-/**
- * _putchar - Prints a char.
- * Description: Writes a character.
- * @c: The character to print.
- * Return: Returns the written char.
- */
-
-int _putchar(char c)
-{
-	return (write(1, &c, 1));
-}
+#include "holberton.h"
 
 /**
  * _strcat - Entry point

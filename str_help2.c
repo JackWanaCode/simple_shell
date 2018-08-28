@@ -1,24 +1,5 @@
 #include "shell.h"
-
-/**
- * _putstring - Entry point
- * Description: Prints a string of characters.
- * @str: The string to be printed.
- * Return: Number of chars. printed.
- */
-
-int _putstring(char *str)
-{
-	int i = 0;
-
-	while (str[i] != '\0')
-	{
-		_putchar(str[i]);
-		i++;
-	}
-	_putchar('\0');
-	return (i);
-}
+#include "holberton.h"
 
 /**
  * string_split - Entry point
@@ -33,8 +14,7 @@ int string_split(char *buffer, char **array, int read)
 {
 	int i, j, k;
 
-/*	string_mod(buffer);
- */	for (i = 0, k = 0, j = 0; i <= read; i++)
+	for (i = 0, k = 0, j = 0; i <= read; i++)
 	{
 		if (buffer[i] == ' ' || buffer[i] == '\n')
 		{
@@ -60,7 +40,7 @@ int string_mod(char *str)
 {
 	int i = 0, j = 0, str_ct = 0, check = 0;
 
-	while(str[i] != '\0')
+	while (str[i] != '\0')
 	{
 		while (str[i] == ' ' || str[i] == '\t')
 			i++;
@@ -80,43 +60,4 @@ int string_mod(char *str)
 	while (str[j] != '\0')
 		str[j++] = '\0';
 	return (str_ct);
-}
-
-/**
- * print_num - Entry point
- * Description: Prints a number as int type.
- * Return: None.
- */
-
-void print_num(int count)
-{
-	int max_digit_int = 1000000000;
-	int temp_num = 0;
-	int num = count;
-
-	while (num / max_digit_int == 0)
-		max_digit_int /= 10;
-	while (max_digit_int > 0)
-	{
-		temp_num = num / max_digit_int;
-		num = num % max_digit_int;
-		_putchar(temp_num + '0');
-		max_digit_int /= 10;
-	}
-}
-
-/**
- * _strlen - Entry point
- * Description: Return length of a string.
- * @s: String is to be checked.
- * Return: String length value.
- */
-
-int _strlen(char *s)
-{
-	int ct = 0;
-
-	while (*(s + ct) != '\0')
-		ct++;
-	return (ct);
 }

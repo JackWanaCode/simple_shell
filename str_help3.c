@@ -1,4 +1,5 @@
 #include "shell.h"
+#include "holberton.h"
 
 /**
  * _memset - Entry point
@@ -16,4 +17,32 @@ char *_memset(char *s, char b, unsigned int n)
 	for (i = 0; i < n; i++)
 		*(s + i) = b;
 	return (s);
+}
+
+/**
+ * sigintHandler - Entry point
+ * Description: Handle ignore when user hit Ctrl C.
+ * @sig_num: Number 2 when hitting Ctrl C.
+ * Return: Nothing.
+ */
+
+void sigintHandler(int sig_num)
+{
+	(void)sig_num;
+	signal(SIGINT, sigintHandler);
+	fflush(stdout);
+}
+
+/**
+ * free_helper - Entry point
+ * Description: A simple funciton to free twice, used in
+ * our builtin function.
+ * @av: The buffer to free.
+ * Return: None.
+ */
+
+void free_helper(char **av)
+{
+	free(av[0]);
+	free(av);
 }
