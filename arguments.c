@@ -1,4 +1,15 @@
 #include "shell.h"
+#include "holberton.h"
+
+/**
+ * main - Entry point
+ * Description: Entry point for our shell. Prompts user for input and decides
+ * how to handle the incoming commands.
+ * @argc: The count of arguments passed.
+ * @argv: The arguments passed.
+ * @env: Gets the enviornment.
+ * Return: 0 upon successful completion.
+ */
 
 int main(int argc, char **argv, char **env)
 {
@@ -17,7 +28,7 @@ int main(int argc, char **argv, char **env)
 	{
 		ct++;
 		check = 0;
-		_putstring("$ ");
+		_printf("$ ");
 		rd = getline(&buffer, &size, stdin);
 		for (i = 0; buffer[i] != '\0'; i++)
 			if (buffer[i] == ' ' || buffer[i] == '\t')
@@ -25,7 +36,7 @@ int main(int argc, char **argv, char **env)
 		if (rd == 1 || rd == check + 1)
 			continue;
 		else if (rd == -1)
-                        status = 0;
+			status = 0;
 		else
 			exec_func(buffer, rd, name, prev_cwd, ct, env);
 	}

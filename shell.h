@@ -18,13 +18,7 @@ char *_strcpy(char *dest, char *src);
 int _strcmp(char *s1, char *s2);
 long _stoi(char *s);
 int string_mod(char *str);
-int _strlen(char *s);
 char *_memset(char *s, char b, unsigned int n);
-
-/* printing helper function */
-int _putchar(char c);
-int _putstring(char *str);
-void print_num(int count);
 
 /* program executing fucntion */
 int exec_func(char *buf, int rd, char *name, char *p_cwd, int ct, char **env);

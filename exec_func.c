@@ -1,11 +1,17 @@
 #include "shell.h"
+#include "holberton.h"
+
 /**
- * exec_function - Entry point
+ * exec_func - Entry point
  * Description: Execute's program. All programs located in
  * /bin/ /usr/bin, and the functions cd, exit, env.
- * @buffer: A string of arguments.
- * @read: Number of character reading.
- * Return: 0. 1 if error.
+ * @buf: A string of arguments.
+ * @rd: Number of character reading.
+ * @name: The name of the program, from argv[0].
+ * @p_cwd: Name of the previous working directory.
+ * @ct: Count of times the loop has been executed.
+ * @env: The enviornment variable.
+ * Return: Returns 0 on success. 1 if there's an error.
  */
 
 int exec_func(char *buf, int rd, char *name, char *p_cwd, int ct, char **env)
@@ -13,25 +19,19 @@ int exec_func(char *buf, int rd, char *name, char *p_cwd, int ct, char **env)
 	char f_av[100] = {'\0'};
 	char **av = NULL;
 	pid_t child_pid;
-	int n = 0;
+	int n = string_mod(buf);
 
-	/* make a string is dilimeted by whitespace */
-	n = string_mod(buf);
-
-	/* tokenized string */
 	av = malloc(sizeof(char *) * (n + 1));
 	if (av == NULL)
 		return (1);
 	string_split(buf, av, rd);
-	/* check if the command for running local program or other built-in func*/
+	/* check if local program or other built-in func*/
 	if (built_in(av, p_cwd, env, name, ct) == 1)
-	{
 		return (0);
-	}
 	/* check if the command located in PATH */
 	_strcpy(f_av, av[0]);
 	argv_check(av[0], f_av, env);
-        child_pid = fork();
+	child_pid = fork();
 
 	if (child_pid == -1)
 	{
@@ -43,13 +43,7 @@ int exec_func(char *buf, int rd, char *name, char *p_cwd, int ct, char **env)
 	{
 		if (execve(f_av, av, NULL) == -1)
 		{
-			write(1, name, _strlen(name));
-			write(1, ": ", 2);
-			print_num(ct);
-			write(1, ": ", 2);
-			write(1, av[0], rd);
-			write(1, ": ", 2);
-			_putstring("not found\n");
+			_printf("%s: %d: %s: not found\n", name, ct, av[0]);
 			free(av);
 			exit(0);
 		}
