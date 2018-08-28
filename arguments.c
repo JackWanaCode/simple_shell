@@ -1,34 +1,32 @@
 #include "shell.h"
 
-char *prev_cwd = NULL;
-int count = 0;
-char *name = NULL;
-
-int main(int argc, char **argv)
+int main(int argc, char **argv, char **env)
 {
-	char *buffer = NULL;
-	int read = 0;
+	char *buffer = NULL, prev_cwd[200];
+	int rd = 0, ct = 0;
 	size_t size = 0;
 	int status = 1;
+	char *name;
 
 	(void)argc;
 	name = &(argv[0][2]);
-	prev_cwd = getcwd(NULL, 150);
+	_memset(prev_cwd, 0, 200);
+	_strcpy(prev_cwd, _getenv(env, "PWD"));
 
 	while (status)
 	{
-		count++;
+		ct++;
 		_putstring("$ ");
-		read = getline(&buffer, &size, stdin);
-		if (read != 1 && read != -1)
-			exec_function(buffer, read);
-		else if (read == 1)
+		rd = getline(&buffer, &size, stdin);
+		if (rd != 1 && rd != -1)
+			exec_func(buffer, rd, name, prev_cwd, ct, env);
+		else if (rd == 1)
 			continue;
-		else if (read == -1)
+		else if (rd == -1)
 			status = 0;
 	}
 	if (buffer)
 		free(buffer);
-	free(prev_cwd);
-	return (0);
+/*	free(prev_cwd);
+ */	return (0);
 }

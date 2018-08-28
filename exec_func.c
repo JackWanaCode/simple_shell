@@ -8,26 +8,28 @@
  * Return: 0. 1 if error.
  */
 
-int exec_function(char *buffer, int read)
+int exec_func(char *buf, int rd, char *name, char *p_cwd, int ct, char **env)
 {
 	char f_av[100] = {'\0'};
 	char **av = NULL;
 	pid_t child_pid;
 	int n = 0;
 
-	n = string_mod(buffer);
+	/* make a string is dilimeted by whitespace */
+	n = string_mod(buf);
+	/* tokenized string */
 	av = malloc(sizeof(char *) * (n + 1));
 	if (av == NULL)
 		return (1);
-	string_split(buffer, av, read);
-
-	if (built_in(av[0], av[1], av) == 1)
+	string_split(buf, av, rd);
+	/* check if the command for running local program or other built-in func*/
+	if (built_in(av, p_cwd, env, name, ct) == 1)
 	{
 		return (0);
 	}
-
+	/* check if the command located in PATH */
 	_strcpy(f_av, av[0]);
-	argv_check(av[0], f_av);
+	argv_check(av[0], f_av, env);
         child_pid = fork();
 
 	if (child_pid == -1)
@@ -42,9 +44,9 @@ int exec_function(char *buffer, int read)
 		{
 			write(1, name, _strlen(name));
 			write(1, ": ", 2);
-			print_num();
+			print_num(ct);
 			write(1, ": ", 2);
-			write(1, av[0], read);
+			write(1, av[0], rd);
 			write(1, ": ", 2);
 			_putstring("not found\n");
 			free(av);

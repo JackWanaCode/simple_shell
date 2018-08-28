@@ -8,7 +8,7 @@
  * Return: nothing
  */
 
-void argv_check(char *av0, char *f_av)
+void argv_check(char *av0, char *f_av, char **env)
 {
 	struct stat st;
 	int i = 0, j = 0;
@@ -21,7 +21,7 @@ void argv_check(char *av0, char *f_av)
 		return;
 	}
 /* else case */
-	str = _getenv("PATH");
+	str = _getenv(env, "PATH");
         do
         {
                 if (str[i] == ':' || str[i] == '\0')
@@ -48,58 +48,58 @@ void argv_check(char *av0, char *f_av)
  * Return: 1 if valid, else 0.
  */
 
-int built_in(char *av1, char *av2, char **av)
+int built_in(char **av, char *prev_cwd, char **env, char *name, int count)
 {
 	long i = 0;
 	int j = 0;
 
-	if (_strcmp(av1, "cd") == 0)
+	if (_strcmp(av[0], "cd") == 0)
         {
-                change_dir(av2);
+                change_dir(av[1], prev_cwd, env);
                 free(av);
                 return (1);
         }
-	if (_strcmp(av1, "exit") == 0)
+	if (_strcmp(av[0], "exit") == 0)
 	{
-		if (av2 == NULL)
+		if (av[1] == NULL)
 		{
-			free_helper(av1, prev_cwd, av);
+			free_helper(av);
 			exit(0);
 		}
 		else
 		{
-			i = _stoi(av2);
+			i = _stoi(av[1]);
 			if (i > INT_MAX || i < 0)
 			{
 				write(1, name, _strlen(name));
 				write(1, ": ", 2);
-				print_num();
+				print_num(count);
 				write(1, ": ", 2);
-				_putstring(av1);
+				_putstring(av[0]);
 				write(1, ": ", 2);
 				_putstring("Illegal number: ");
-				_putstring(av2);
+				_putstring(av[1]);
 				_putstring("\n");
 				free(av);
 				return (1);
 			}
 			else if (i >= 0)
 			{
-				free_helper(av1, prev_cwd, av);
+				free_helper(av);
 				exit(i);
 			}
 			else
 			{
-				free_helper(av1, prev_cwd, av);
+				free_helper(av);
 				exit(0);
 			}
 		}
 	}
-	if (_strcmp(av1, "env") == 0)
+	if (_strcmp(av[0], "env") == 0)
 	{
-		while (environ[j])
+		while (env[j])
 		{
-			_putstring(environ[j++]);
+			_putstring(env[j++]);
 			_putstring("\n");
 		}
 		free(av);
@@ -115,18 +115,18 @@ int built_in(char *av1, char *av2, char **av)
  * Return: String of value of environment.
  */
 
-char *_getenv(const char *name)
+char *_getenv(char **env, const char *name)
 {
 	int i = 0, j = 0, len = 0;
 
 	for (len = 0; name[len] != '\0'; len++)
 		;
-	while (environ[i])
+	while (env[i])
 	{
-		for (j = 0; environ[i][j] == name[j]; j++)
+		for (j = 0; env[i][j] == name[j]; j++)
 			;
 		if (j == len)
-			return (&environ[i][len + 1]);
+			return (&env[i][len + 1]);
 		i++;
 	}
 	return (NULL);
@@ -141,22 +141,22 @@ char *_getenv(const char *name)
  * Return: String of value of environment.
  */
 
-int _setenv(const char *name, const char *value, int overwrite)
+int _setenv(char **env, const char *name, const char *value, int overwrite)
 {
 	int i = 0, j = 0, len = 0;
 
 	for (len = 0; name[len] != '\0'; len++)
 		;
-	while (environ[i] && overwrite > 0)
+	while (env[i] && overwrite > 0)
 	{
-		for (j = 0; environ[i][j] == name[j]; j++)
+		for (j = 0; env[i][j] == name[j]; j++)
 			;
 		if (j == len)
 		{
-			environ[i][len] = '=';
+			env[i][len] = '=';
 			for (j = 0; value[j] != '\0'; j++)
-				environ[i][len + j + 1] = value[j];
-			environ[i][len + j + 1] = '\0';
+				env[i][len + j + 1] = value[j];
+			env[i][len + j + 1] = '\0';
 			break;
 		}
 		i++;
@@ -169,38 +169,35 @@ int _setenv(const char *name, const char *value, int overwrite)
  * Return: Returns a pointer to the updated directory.
  */
 
-void change_dir(char *av2)
+void change_dir(char *av2, char *prev_cwd, char **env)
 {
-	char str[100];
-	char *temp = getcwd(NULL, 150);
+	char str[200];
 
-	_strcpy(str, _getenv("HOME"));
-
+	_strcpy(str, _getenv(env, "HOME"));
 	if ((av2 == NULL) || (_strcmp(av2, "$HOME") == 0))
 	{
 		chdir(str);
-		free(prev_cwd);
-		prev_cwd = temp;
-		_setenv("PWD", str, 1);
+		_memset(prev_cwd, 0, 200);
+		_strcpy(prev_cwd, _getenv(env, "PWD"));
+ 		_setenv(env, "PWD", str, 1);
 	}
 	else if (_strcmp(av2, "-") == 0)
 	{
 		chdir(prev_cwd);
-		_setenv("PWD", prev_cwd, 1);
-		free(prev_cwd);
-		prev_cwd = temp;
+		_memset(prev_cwd, 0, 200);
+                _strcpy(prev_cwd, _getenv(env, "PWD"));
+		_setenv(env, "PWD", prev_cwd, 1);
 	}
 	else if (chdir(av2) == 0)
 	{
+		_memset(prev_cwd, 0, 200);
+                _strcpy(prev_cwd, _getenv(env, "PWD"));
 		_strcat(str, "/");
                 _strcat(str, av2);
-		_setenv("PWD", str, 1);
-		free(prev_cwd);
-		prev_cwd = temp;
+		_setenv(env, "PWD", str, 1);
 	}
 	else
 	{
-		free(temp);
 		_putstring("path not found\n");
 	}
 }
@@ -214,9 +211,8 @@ void change_dir(char *av2)
  * Return: None.
  */
 
-void free_helper(char *av1, char *cwd, char **av)
+void free_helper(char **av)
 {
-	free(av1);
-	free(cwd);
+	free(av[0]);
 	free(av);
 }

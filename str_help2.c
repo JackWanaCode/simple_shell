@@ -62,9 +62,9 @@ int string_mod(char *str)
 
 	while(str[i] != '\0')
 	{
-		while (str[i] == ' ')
+		while (str[i] == ' ' || str[i] == '\t')
 			i++;
-		while (str[i] != ' ' && str[i] != '\0')
+		while (str[i] != ' ' && str[i] != '\0' && str[i] != '\t')
 		{
 			check = 1;
 			str[j++] = str[i++];
@@ -88,7 +88,7 @@ int string_mod(char *str)
  * Return: None.
  */
 
-void print_num(void)
+void print_num(int count)
 {
 	int max_digit_int = 1000000000;
 	int temp_num = 0;
