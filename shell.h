@@ -10,6 +10,7 @@
 #include <sys/wait.h>
 #include <limits.h>
 #include <signal.h>
+#define _GNU_SOURCE
 
 /* string manipulation */
 int string_split(char *buffer, char **array, int read);
