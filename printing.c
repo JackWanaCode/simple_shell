@@ -25,7 +25,7 @@ int _strlen(char *s)
  */
 int _putchar(char c)
 {
-	return (write(1, &c, 1));
+	return (write(STDERR_FILENO, &c, 1));
 }
 
 /**
@@ -39,7 +39,7 @@ int print_char(va_list ap)
 	int c;
 
 	c = va_arg(ap, int);
-	write(1, &c, 1);
+	write(STDERR_FILENO, &c, 1);
 	return (1);
 }
 

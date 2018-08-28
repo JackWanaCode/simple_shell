@@ -86,7 +86,7 @@ int built_in(char **av, char *prev_cwd, char **env, char *name, int count)
 	if (_strcmp(av[0], "env") == 0)
 	{
 		while (env[j])
-			_printf("%s\n", env[j++]);
+			write(STDOUT_FILENO, "%s\n", _strlen(env[j++]) + 1);
 		free(av);
 		return (1);
 	}
