@@ -50,8 +50,15 @@ void argv_check(char *av0, char *f_av)
 
 int built_in(char *av1, char *av2, char **av)
 {
-	int i = 0;
+	long i = 0;
+	int j = 0;
 
+	if (_strcmp(av1, "cd") == 0)
+        {
+                change_dir(av2);
+                free(av);
+                return (1);
+        }
 	if (_strcmp(av1, "exit") == 0)
 	{
 		if (av2 == NULL)
@@ -62,7 +69,21 @@ int built_in(char *av1, char *av2, char **av)
 		else
 		{
 			i = _stoi(av2);
-			if (i >= 0)
+			if (i > INT_MAX || i < 0)
+			{
+				write(1, name, _strlen(name));
+				write(1, ": ", 2);
+				print_num();
+				write(1, ": ", 2);
+				_putstring(av1);
+				write(1, ": ", 2);
+				_putstring("Illegal number: ");
+				_putstring(av2);
+				_putstring("\n");
+				free(av);
+				return (1);
+			}
+			else if (i >= 0)
 			{
 				free_helper(av1, prev_cwd, av);
 				exit(i);
@@ -76,11 +97,12 @@ int built_in(char *av1, char *av2, char **av)
 	}
 	if (_strcmp(av1, "env") == 0)
 	{
-		while (environ[i])
+		while (environ[j])
 		{
-			_putstring(environ[i++]);
+			_putstring(environ[j++]);
 			_putstring("\n");
 		}
+		free(av);
 		return (1);
 	}
 	return (0);

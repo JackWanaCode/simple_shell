@@ -85,9 +85,9 @@ int _strcmp(char *s1, char *s2)
  * Return: Number as an integer type.
  */
 
-int _stoi(char *s)
+long _stoi(char *s)
 {
-	int n = 0, i = 0;
+	long n = 0, i = 0;
 
 	for (; s[i] != '\0'; i++)
 	{

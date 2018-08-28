@@ -21,17 +21,8 @@ int exec_function(char *buffer, int read)
 		return (1);
 	string_split(buffer, av, read);
 
-	if (_strcmp(av[0], "cd") == 0)
+	if (built_in(av[0], av[1], av) == 1)
 	{
-		change_dir(av[1]);
-		free(av);
-		return (0);
-	}
-	else if (_strcmp(av[0], "exit") == 0)
-		built_in(av[0], av[1], av);
-	else if (built_in(av[0], av[1], av) == 1)
-	{
-		free(av);
 		return (0);
 	}
 

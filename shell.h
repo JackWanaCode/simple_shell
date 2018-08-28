@@ -8,6 +8,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <limits.h>
 
 /* global variables */
 extern char **environ;
@@ -20,7 +21,7 @@ int string_split(char *buffer, char **array, int read);
 char *_strcat(char *dest, char *src);
 char *_strcpy(char *dest, char *src);
 int _strcmp(char *s1, char *s2);
-int _stoi(char *s);
+long _stoi(char *s);
 int string_mod(char *str);
 int _strlen(char *s);
 char *_memset(char *s, char b, unsigned int n);
