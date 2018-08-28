@@ -28,7 +28,7 @@ int main(int argc, char **argv, char **env)
 	{
 		ct++;
 		check = 0;
-		_printf("$ ");
+		_printf("%s$ ", &argv[0][2]);
 		rd = getline(&buffer, &size, stdin);
 		for (i = 0; buffer[i] != '\0'; i++)
 			if (buffer[i] == ' ' || buffer[i] == '\t')
@@ -42,5 +42,6 @@ int main(int argc, char **argv, char **env)
 	}
 	if (buffer)
 		free(buffer);
+	_printf("\n");
 	return (0);
 }
