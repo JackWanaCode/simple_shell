@@ -1,33 +1,68 @@
-.TH SIMMPLE_SHELL 2 "AUG 30 2018" "0.01" "simple_shell man page"
+.TH SIMPLE_SHELL 2 "AUG 30 2018" "0.01" "simple_shell man page"
 .SH NAME
 .B simple_shell
-\- handler the command lines like the Shell does
+\- handling the command lines like the shell does.
 
 .SH SYNOPSIS
-#include <......>
+#include <string.h>
 
+#include <stdio.h>
 
+#include <stdlib.h>
+
+#include <unistd.h>
+
+#include <sys/types.h>
+
+#include <sys/stat.h>
+
+#include <unistd.h>
+
+#include <sys/wait.h>
+
+#include <limits.h>
+
+#include <signal.h>
 
 .SH DESCRIPTION
-1. firts paragraph
+This simple shell will works same as shell. It means that  the program will receive keyboard commands and passes them to the operating system to carry out.
 
-2. second paragraph
+When the simple shell is launched, it will start with dollar sign "$". This is called a shell prompt. User will input data after this sign and the program will run after hit enter.
 
 .IP
 .P
 .TP
 .B Return Value
+Return status value when user want to exit the shell.
 
 .IP
 .P
 .TP
-.B Format of the format string
+.B Programs and following commands will be handled:
 
-Commands handling:
+.B Commands located in PATH:
 
-PATH
-exit
-env
+ls [OPTION] : list directory contents
+
+pwd : print name of current/working directory
+
+.B Built-in functions:
+.IP
+cd [PATH]: change directory
+
+exit [STATUS] : cause normal process termination.
+
+env : run a program in a modified environment.
+
+_setenv [NAME] : Initialize a new environment variable, or modify an existing one.
+
+-getenv [NAME] : get an environment variable.
+.P
+.B Handling Ctrl+C:
+The simple shell will be terminated.
+.P
+.B Handling Ctrl+D:
+The simple shell will be terminated.
 
 .IP
 .P
