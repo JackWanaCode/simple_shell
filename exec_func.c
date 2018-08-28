@@ -17,6 +17,7 @@ int exec_func(char *buf, int rd, char *name, char *p_cwd, int ct, char **env)
 
 	/* make a string is dilimeted by whitespace */
 	n = string_mod(buf);
+
 	/* tokenized string */
 	av = malloc(sizeof(char *) * (n + 1));
 	if (av == NULL)

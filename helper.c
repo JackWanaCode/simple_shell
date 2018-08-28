@@ -216,3 +216,16 @@ void free_helper(char **av)
 	free(av[0]);
 	free(av);
 }
+
+/**
+ * handle_sigint - Entry point
+ * Description: Handle ignore when user hit Ctrl C
+ * @sig_num: number 2 when hitting Ctrl C
+ * return: nothing
+ */
+void sigintHandler(int sig_num)
+{
+	(void)sig_num;
+	signal(SIGINT, sigintHandler);
+	fflush(stdout);
+}

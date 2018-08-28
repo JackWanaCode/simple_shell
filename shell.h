@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <limits.h>
+#include <signal.h>
 
 /* string manipulation */
 int string_split(char *buffer, char **array, int read);
@@ -35,5 +36,6 @@ char *_getenv(char **env, const char *name);
 int _setenv(char **env, const char *name, const char *value, int overwrite);
 void change_dir(char *av2, char *prev_cwd, char **env);
 void free_helper(char **av);
+void sigintHandler(int sig_num);
 
 #endif

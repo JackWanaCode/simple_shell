@@ -12,7 +12,7 @@ int main(int argc, char **argv, char **env)
 	name = &(argv[0][2]);
 	_memset(prev_cwd, 0, 200);
 	_strcpy(prev_cwd, _getenv(env, "PWD"));
-
+	signal(SIGINT, sigintHandler);
 	while (status)
 	{
 		ct++;
@@ -31,6 +31,5 @@ int main(int argc, char **argv, char **env)
 	}
 	if (buffer)
 		free(buffer);
-/*	free(prev_cwd);
- */	return (0);
+	return (0);
 }
