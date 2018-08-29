@@ -13,6 +13,10 @@
 #include <limits.h>
 #include <signal.h>
 
+/*string printing*/
+int _putchar(char c);
+int _strlen(char *s);
+void print_num(int count);
 
 /* string manipulation */
 int string_split(char *buffer, char **array, int read);
@@ -34,6 +38,5 @@ int _setenv(char **env, const char *name, const char *value, int overwrite);
 void change_dir(char *av2, char *prev_cwd, char **env);
 void free_helper(char **av);
 void sigintHandler(int sig_num);
-void print_num(int count);
 
 #endif

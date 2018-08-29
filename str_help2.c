@@ -1,5 +1,4 @@
 #include "shell.h"
-#include "holberton.h"
 
 /**
  * string_split - Entry point
@@ -84,4 +83,31 @@ void print_num(int count)
 		_putchar(temp_num + '0');
 		max_digit_int /= 10;
 	}
+}
+
+/**                                                                                                  
+ * _strlen - find the length of a string                                                             
+ * @s: string to be parsed                                                                           
+ *                                                                                                   
+ * Return: num of characters in string                                                               
+ */
+int _strlen(char *s)
+{
+        int i;
+
+        for (i = 0; s[i] != '\0'; i++)
+                ;
+        return (i);
+}
+
+/**                                                                                                  
+ * _putchar - writes the character c to stdout                                                       
+ * @c: The character to print                                                                        
+ *                                                                                                   
+ * Return: On success 1.                                                                             
+ * On error, -1 is returned, and errno is set appropriately.                                         
+ */
+int _putchar(char c)
+{
+        return (write(STDERR_FILENO, &c, 1));
 }

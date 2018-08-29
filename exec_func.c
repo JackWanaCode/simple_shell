@@ -1,5 +1,4 @@
 #include "shell.h"
-#include "holberton.h"
 
 /**
  * exec_func - Entry point

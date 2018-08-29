@@ -1,5 +1,4 @@
 #include "shell.h"
-#include "holberton.h"
 
 /**
  * _memset - Entry point
