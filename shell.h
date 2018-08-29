@@ -35,7 +35,7 @@ void argv_check(char *av0, char *f_av, char **env);
 int built_in(char **av, char *prev_cwd, char **env, char *name, int count);
 char *_getenv(char **env, const char *name);
 int _setenv(char **env, const char *name, const char *value, int overwrite);
-void change_dir(char *av2, char *prev_cwd, char **env);
+void ch_dir(char *av2, char *pr_cwd, char **env, char *name, int ct, char **av);
 void free_helper(char **av);
 void sigintHandler(int sig_num);
 

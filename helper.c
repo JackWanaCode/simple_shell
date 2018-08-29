@@ -57,7 +57,7 @@ int built_in(char **av, char *prev_cwd, char **env, char *name, int count)
 
 	if (_strcmp(av[0], "cd") == 0)
 	{
-		change_dir(av[1], prev_cwd, env);
+		ch_dir(av[1], prev_cwd, env, name, count, av);
 		free(av);
 		return (1);
 	}
@@ -169,7 +169,7 @@ int _setenv(char **env, const char *name, const char *value, int overwrite)
  * Return: Returns a pointer to the updated directory.
  */
 
-void change_dir(char *av2, char *prev_cwd, char **env)
+void ch_dir(char *av2, char *pr_cwd, char **env, char *name, int ct, char **av)
 {
 	char str[200];
 
@@ -177,27 +177,34 @@ void change_dir(char *av2, char *prev_cwd, char **env)
 	if ((av2 == NULL) || (_strcmp(av2, "$HOME") == 0))
 	{
 		chdir(str);
-		_memset(prev_cwd, 0, 200);
-		_strcpy(prev_cwd, _getenv(env, "PWD"));
+		_memset(pr_cwd, 0, 200);
+		_strcpy(pr_cwd, _getenv(env, "PWD"));
 		_setenv(env, "PWD", str, 1);
 	}
 	else if (_strcmp(av2, "-") == 0)
 	{
-		chdir(prev_cwd);
-		_memset(prev_cwd, 0, 200);
-		_strcpy(prev_cwd, _getenv(env, "PWD"));
-		_setenv(env, "PWD", prev_cwd, 1);
+		chdir(pr_cwd);
+		_memset(pr_cwd, 0, 200);
+		_strcpy(pr_cwd, _getenv(env, "PWD"));
+		_setenv(env, "PWD", pr_cwd, 1);
 	}
 	else if (chdir(av2) == 0)
 	{
-		_memset(prev_cwd, 0, 200);
-		_strcpy(prev_cwd, _getenv(env, "PWD"));
+		_memset(pr_cwd, 0, 200);
+		_strcpy(pr_cwd, _getenv(env, "PWD"));
 		_strcat(str, "/");
 		_strcat(str, av2);
 		_setenv(env, "PWD", str, 1);
 	}
 	else
 	{
-		perror("Needs to be updated: ");
+		write(STDERR_FILENO, name, _strlen(name));
+		write(STDERR_FILENO,": ", 2);
+		print_num(ct);
+		write(STDERR_FILENO,": ", 2);
+		write(STDERR_FILENO, av[0], _strlen(av[0]));
+		write(STDERR_FILENO,": can't cd to ", 15);
+		write(STDERR_FILENO, av[1], _strlen(av[1]));
+		write(STDERR_FILENO, "\n", 1);
 	}
 }
