@@ -16,7 +16,7 @@ int main(int argc, char **argv, char **env)
 	char *buffer = NULL, prev_cwd[200];
 	int rd = 0, ct = 0;
 	size_t size = 0;
-	int status = 1, i = 0, check, indicator = 0;
+	int status = 1, i = 0, check;
 	char *name = &(argv[0][2]);
 
 	(void)argc;
@@ -27,7 +27,8 @@ int main(int argc, char **argv, char **env)
 	{
 		ct++;
 		check = 0;
-		write(STDOUT_FILENO, "$ ", 2);
+		if (isatty(0) == 1)
+			write(STDOUT_FILENO, "$ ", 2);
 		rd = getline(&buffer, &size, stdin);
 /*		if (buffer[rd] != '\n')
 			indicator = 1;
@@ -45,6 +46,7 @@ int main(int argc, char **argv, char **env)
 */	}
 	if (buffer)
 		free(buffer);
-	write(1, "\n", 1);
+	if (isatty(0) == 1)
+		write(1, "\n", 1);
 	return (0);
 }

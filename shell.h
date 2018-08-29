@@ -1,5 +1,7 @@
 #ifndef __SIMPLE_SHELL__
 #define __SIMPLE_SHELL__
+#define _GNU_SOURCE
+
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,7 +12,7 @@
 #include <sys/wait.h>
 #include <limits.h>
 #include <signal.h>
-#define _GNU_SOURCE
+
 
 /* string manipulation */
 int string_split(char *buffer, char **array, int read);
