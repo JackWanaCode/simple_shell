@@ -80,7 +80,7 @@ int built_in(char **av, char *prev_cwd, char **env, char *name, int count)
                         write(STDERR_FILENO, av[1], _strlen(av[1]));
 			write(STDERR_FILENO, "\n", 1);
 			free(av);
-			return (1);
+			return (2);
 		}
 		else if (i >= 0)
 		{

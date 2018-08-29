@@ -13,7 +13,7 @@
 int main(int argc, char **argv, char **env)
 {
 	char *buffer = NULL, prev_cwd[200];
-	int rd = 0, ct = 0;
+	int rd = 0, ct = 0, exchk = 0;
 	size_t size = 0;
 	int status = 1, i = 0, check;
 	char *name = &(argv[0][2]);
@@ -37,9 +37,17 @@ int main(int argc, char **argv, char **env)
 		if (rd == 1 || rd == check + 1)
 			continue;
 		else if (rd == -1)
+		{
 			status = 0;
+			if (exchk == 2)
+			{
+				if (buffer)
+					free(buffer);
+				exit(2);
+			}
+		}
 		else
-			exec_func(buffer, rd, name, prev_cwd, ct, env);
+			exchk = exec_func(buffer, rd, name, prev_cwd, ct, env);
 	}
 	if (buffer)
 		free(buffer);
