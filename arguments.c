@@ -37,10 +37,7 @@ int main(int argc, char **argv, char **env)
 		if (rd == 1 || rd == check + 1)
 			continue;
 		else if (rd == -1)
-		{
-			free(buffer);
 			status = 0;
-		}
 		else
 			exec_func(buffer, rd, name, prev_cwd, ct, env);
 	}
