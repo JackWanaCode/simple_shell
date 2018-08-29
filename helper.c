@@ -53,14 +53,12 @@ void argv_check(char *av0, char *f_av, char **env)
 int built_in(char **av, char *prev_cwd, char **env, char *name, int count)
 {
 	long i = 0;
-	int j = 0, ret_val = 0;
+	int j = 0;
 
 	if (_strcmp(av[0], "cd") == 0)
 	{
-		ret_val = ch_dir(av[1], prev_cwd, env, name, count, av);
+		ch_dir(av[1], prev_cwd, env, name, count, av);
 		free(av);
-		if (ret_val == 2)
-			return (2);
 		return (1);
 	}
 	if ((_strcmp(av[0], "exit") == 0) && (av[1] == NULL))
@@ -171,7 +169,7 @@ int _setenv(char **env, const char *name, const char *value, int overwrite)
  * Return: Returns a pointer to the updated directory.
  */
 
-int ch_dir(char *av2, char *pr_cwd, char **env, char *name, int ct, char **av)
+void ch_dir(char *av2, char *pr_cwd, char **env, char *name, int ct, char **av)
 {
 	char str[200];
 	char *temp;
@@ -185,7 +183,6 @@ int ch_dir(char *av2, char *pr_cwd, char **env, char *name, int ct, char **av)
 		_strcpy(pr_cwd, temp);
 		free(temp);
 		_setenv(env, "PWD", str, 1);
-		return (0);
 	}
 	else if (_strcmp(av2, "-") == 0)
 	{
@@ -196,7 +193,6 @@ int ch_dir(char *av2, char *pr_cwd, char **env, char *name, int ct, char **av)
 		_memset(pr_cwd, 0, 200);
 		_strcpy(pr_cwd, temp);
 		free(temp);
-		return (0);
 	}
 	else if (chdir(av2) == 0)
 	{
@@ -206,7 +202,6 @@ int ch_dir(char *av2, char *pr_cwd, char **env, char *name, int ct, char **av)
 		_strcat(str, "/");
 		_strcat(str, av2);
 		_setenv(env, "PWD", str, 1);
-		return (0);
 	}
 	else
 	{
@@ -219,6 +214,5 @@ int ch_dir(char *av2, char *pr_cwd, char **env, char *name, int ct, char **av)
 		write(STDERR_FILENO, av[1], _strlen(av[1]));
 		write(STDERR_FILENO, "\n", 1);
 		free(temp);
-		return (2);
 	}
 }
