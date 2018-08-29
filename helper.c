@@ -184,9 +184,9 @@ void ch_dir(char *av2, char *pr_cwd, char **env, char *name, int ct, char **av)
 	else if (_strcmp(av2, "-") == 0)
 	{
 		chdir(pr_cwd);
+		_setenv(env, "PWD", pr_cwd, 1);
 		_memset(pr_cwd, 0, 200);
 		_strcpy(pr_cwd, _getenv(env, "PWD"));
-		_setenv(env, "PWD", pr_cwd, 1);
 	}
 	else if (chdir(av2) == 0)
 	{
