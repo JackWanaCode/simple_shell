@@ -48,7 +48,7 @@ int exec_func(char *buf, int rd, char *name, char *p_cwd, int ct, char **env)
                         write(STDERR_FILENO,": ", 2);
 			write(STDERR_FILENO, av[0], _strlen(av[0]));
                         write(STDERR_FILENO,": ", 2);
-			perror("");
+                        write(STDERR_FILENO, "not found\n", 10);
 			free(av);
 			exit(0);
 		}
