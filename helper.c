@@ -72,7 +72,7 @@ int built_in(char **av, char *prev_cwd, char **env, char *name, int count)
 		i = _stoi(av[1]);
 		if (i > INT_MAX || i < 0)
 		{
-			_printf(stderr,"%s: %d: %s: Illegal number: %s\n", name, count,
+			_printf("%s: %d: %s: Illegal number: %s\n", name, count,
 				av[0], av[1]);
 			free(av);
 			return (1);

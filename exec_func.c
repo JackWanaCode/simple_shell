@@ -43,7 +43,7 @@ int exec_func(char *buf, int rd, char *name, char *p_cwd, int ct, char **env)
 	{
 		if (execve(f_av, av, NULL) == -1)
 		{
-			_printf(stderr,"%s: %d: %s: not found\n", name, ct, av[0]);
+			_printf("%s: %d: %s: not found\n", name, ct, av[0]);
 			free(av);
 			exit(0);
 		}
