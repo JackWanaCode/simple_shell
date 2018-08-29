@@ -34,5 +34,6 @@ int _setenv(char **env, const char *name, const char *value, int overwrite);
 void change_dir(char *av2, char *prev_cwd, char **env);
 void free_helper(char **av);
 void sigintHandler(int sig_num);
+void print_num(int count);
 
 #endif

@@ -72,8 +72,14 @@ int built_in(char **av, char *prev_cwd, char **env, char *name, int count)
 		i = _stoi(av[1]);
 		if (i > INT_MAX || i < 0)
 		{
-			_printf("%s: %d: %s: Illegal number: %s\n", name, count,
-				av[0], av[1]);
+                        write(STDERR_FILENO, name, _strlen(name));
+                        write(STDERR_FILENO,": ", 2);
+                        print_num(count);
+                        write(STDERR_FILENO,": ", 2);
+                        write(STDERR_FILENO, av[0], _strlen(av[0]));
+                        write(STDERR_FILENO,": Illegal number: ", 18);
+                        write(STDERR_FILENO, av[1], _strlen(av[1]));
+			write(STDERR_FILENO, "\n", 1);
 			free(av);
 			return (1);
 		}
@@ -193,6 +199,6 @@ void change_dir(char *av2, char *prev_cwd, char **env)
 	}
 	else
 	{
-		_printf("path not found\n");
+		perror("Needs to be updated: ");
 	}
 }

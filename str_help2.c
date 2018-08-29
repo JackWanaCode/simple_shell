@@ -61,3 +61,27 @@ int string_mod(char *str)
 		str[j++] = '\0';
 	return (str_ct);
 }
+
+/**
+ * print_num - Entry point
+ * Description: Prints a number as int type.
+ * @count: The count of loops.
+ * Return: None.
+ */
+
+void print_num(int count)
+{
+	int max_digit_int = 1000000000;
+	int temp_num = 0;
+	int num = count;
+
+	while (num / max_digit_int == 0)
+		max_digit_int /= 10;
+	while (max_digit_int > 0)
+	{
+		temp_num = num / max_digit_int;
+		num = num % max_digit_int;
+		_putchar(temp_num + '0');
+		max_digit_int /= 10;
+	}
+}
