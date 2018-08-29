@@ -19,7 +19,7 @@ int exec_func(char *buf, int rd, char *name, char *p_cwd, int ct, char **env)
 	char **av = NULL;
 	pid_t child_pid;
 	int n = string_mod(buf);
-	int built_in_ret = 0, exec_ret = 0;
+	int built_in_ret = 0;
 
 	av = malloc(sizeof(char *) * (n + 1));
 	if (av == NULL)
@@ -44,10 +44,7 @@ int exec_func(char *buf, int rd, char *name, char *p_cwd, int ct, char **env)
 	}
 	else if (child_pid == 0)
 	{
-		exec_ret = execve(f_av, av, NULL);
-
-/*		if (exec_ret = execve(f_av, av, NULL) == -1)
- */		if (exec_ret == -1)
+		if (execve(f_av, av, NULL) == -1)
 		{
 			write(STDERR_FILENO, name, _strlen(name));
 			write(STDERR_FILENO,": ", 2);
@@ -57,10 +54,8 @@ int exec_func(char *buf, int rd, char *name, char *p_cwd, int ct, char **env)
                         write(STDERR_FILENO,": ", 2);
                         write(STDERR_FILENO, "not found\n", 10);
 			free(av);
-			exit(127);
+			exit(1);
 		}
-		else if (exec_ret == 2)
-			return (2);
 	}
 	else
 		wait(NULL);
