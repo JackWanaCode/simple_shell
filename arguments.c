@@ -29,20 +29,21 @@ int main(int argc, char **argv, char **env)
 		if (isatty(0) == 1)
 			write(STDOUT_FILENO, "$ ", 2);
 		rd = getline(&buffer, &size, stdin);
-/*		if (buffer[rd] != '\n')
-			indicator = 1;
-*/		for (i = 0; buffer[i] != '\0'; i++)
+		for (i = 0; buffer[i] != '\0'; i++)
+		{
 			if (buffer[i] == ' ' || buffer[i] == '\t')
 				check++;
+		}
 		if (rd == 1 || rd == check + 1)
 			continue;
 		else if (rd == -1)
+		{
+			free(buffer);
 			status = 0;
+		}
 		else
 			exec_func(buffer, rd, name, prev_cwd, ct, env);
-/*		if (indicator == 1)
-			exit(0);
-*/	}
+	}
 	if (buffer)
 		free(buffer);
 	if (isatty(0) == 1)
