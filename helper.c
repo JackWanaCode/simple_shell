@@ -172,26 +172,33 @@ int _setenv(char **env, const char *name, const char *value, int overwrite)
 void ch_dir(char *av2, char *pr_cwd, char **env, char *name, int ct, char **av)
 {
 	char str[200];
+	char *temp;
 
 	_strcpy(str, _getenv(env, "HOME"));
+	temp = getcwd(NULL, 150);
 	if ((av2 == NULL) || (_strcmp(av2, "$HOME") == 0))
 	{
 		chdir(str);
 		_memset(pr_cwd, 0, 200);
-		_strcpy(pr_cwd, _getenv(env, "PWD"));
+		_strcpy(pr_cwd, temp);
+		free(temp);
 		_setenv(env, "PWD", str, 1);
 	}
 	else if (_strcmp(av2, "-") == 0)
 	{
 		chdir(pr_cwd);
+		write(STDOUT_FILENO, pr_cwd, strlen(pr_cwd));
+		write(STDOUT_FILENO, "\n", 1);
 		_setenv(env, "PWD", pr_cwd, 1);
 		_memset(pr_cwd, 0, 200);
-		_strcpy(pr_cwd, _getenv(env, "PWD"));
+		_strcpy(pr_cwd, temp);
+		free(temp);
 	}
 	else if (chdir(av2) == 0)
 	{
 		_memset(pr_cwd, 0, 200);
-		_strcpy(pr_cwd, _getenv(env, "PWD"));
+		_strcpy(pr_cwd, temp);
+		free(temp);
 		_strcat(str, "/");
 		_strcat(str, av2);
 		_setenv(env, "PWD", str, 1);
@@ -206,5 +213,6 @@ void ch_dir(char *av2, char *pr_cwd, char **env, char *name, int ct, char **av)
 		write(STDERR_FILENO,": can't cd to ", 15);
 		write(STDERR_FILENO, av[1], _strlen(av[1]));
 		write(STDERR_FILENO, "\n", 1);
+		free(temp);
 	}
 }
