@@ -21,6 +21,8 @@ int exec_func(char *buf, int rd, char *name, char *p_cwd, int ct, char **env)
 	int n = string_mod(buf);
 	int built_in_ret;
 
+	if (rd == -1)
+		return (1);
 	av = malloc(sizeof(char *) * (n + 1));
 	if (av == NULL)
 		return (1);
