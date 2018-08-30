@@ -22,10 +22,10 @@ int string_split(char *buffer, char **array, int read)
 			j = i + 1;
 			k++;
 		}
-		if (k == 0)
-			array[k++] = &buffer[j];
-		array[k] = NULL;
 	}
+	if (k == 0)
+		array[k++] = &buffer[j];
+	array[k] = NULL;
 	return (k);
 }
 
