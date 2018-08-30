@@ -50,12 +50,12 @@ int exec_func(char *buf, int rd, char *name, char *p_cwd, int ct, char **env)
 		if (execve(f_av, av, NULL) == -1)
 		{
 			write(STDERR_FILENO, name, _strlen(name));
-			write(STDERR_FILENO,": ", 2);
+			write(STDERR_FILENO, ": ", 2);
 			print_num(ct);
-                        write(STDERR_FILENO,": ", 2);
+			write(STDERR_FILENO, ": ", 2);
 			write(STDERR_FILENO, av[0], _strlen(av[0]));
-                        write(STDERR_FILENO,": ", 2);
-                        write(STDERR_FILENO, "not found\n", 10);
+			write(STDERR_FILENO, ": ", 2);
+			write(STDERR_FILENO, "not found\n", 10);
 			free(av);
 			exit(0);
 		}
