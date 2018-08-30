@@ -73,13 +73,13 @@ int built_in(char **av, char *prev_cwd, char **env, char *name, int count)
 		i = _stoi(av[1]);
 		if (i > INT_MAX || i < 0)
 		{
-                        write(STDERR_FILENO, name, _strlen(name));
-                        write(STDERR_FILENO,": ", 2);
-                        print_num(count);
-                        write(STDERR_FILENO,": ", 2);
-                        write(STDERR_FILENO, av[0], _strlen(av[0]));
-                        write(STDERR_FILENO,": Illegal number: ", 18);
-                        write(STDERR_FILENO, av[1], _strlen(av[1]));
+			write(STDERR_FILENO, name, _strlen(name));
+			write(STDERR_FILENO, ": ", 2);
+			print_num(count);
+			write(STDERR_FILENO, ": ", 2);
+			write(STDERR_FILENO, av[0], _strlen(av[0]));
+			write(STDERR_FILENO, ": Illegal number: ", 18);
+			write(STDERR_FILENO, av[1], _strlen(av[1]));
 			write(STDERR_FILENO, "\n", 1);
 			free(av);
 			return (2);
@@ -163,11 +163,14 @@ int _setenv(char **env, const char *name, const char *value, int overwrite)
 }
 
 /**
- * change_dir - Entry point
+ * ch_dir - Entry point
  * @av2: The second argument from the user.
- * @prev_cwd: The name of the previous working directory.
+ * @pr_cwd: The name of the previous working directory.
  * @env: The enviornment variable.
- * Return: Returns a pointer to the updated directory.
+ * @name: Char string of argv.
+ * @ct: The count of loops.
+ * @av: The argument string.
+* Return: Returns a pointer to the updated directory.
  */
 
 int ch_dir(char *av2, char *pr_cwd, char **env, char *name, int ct, char **av)
@@ -210,11 +213,11 @@ int ch_dir(char *av2, char *pr_cwd, char **env, char *name, int ct, char **av)
 	else
 	{
 		write(STDERR_FILENO, name, _strlen(name));
-		write(STDERR_FILENO,": ", 2);
+		write(STDERR_FILENO, ": ", 2);
 		print_num(ct);
-		write(STDERR_FILENO,": ", 2);
+		write(STDERR_FILENO, ": ", 2);
 		write(STDERR_FILENO, av[0], _strlen(av[0]));
-		write(STDERR_FILENO,": can't cd to ", 15);
+		write(STDERR_FILENO, ": can't cd to ", 15);
 		write(STDERR_FILENO, av[1], _strlen(av[1]));
 		write(STDERR_FILENO, "\n", 1);
 		free(temp);
