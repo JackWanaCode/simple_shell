@@ -87,29 +87,29 @@ void print_num(int count)
 	}
 }
 
-/**                                                                                                  
- * _strlen - find the length of a string                                                             
- * @s: string to be parsed                                                                           
- *                                                                                                   
- * Return: num of characters in string                                                               
+/**
+ * _strlen - find the length of a string
+ * @s: string to be parsed
+ *
+ * Return: num of characters in string
  */
 int _strlen(char *s)
 {
-        int i;
+	int i;
 
-        for (i = 0; s[i] != '\0'; i++)
-                ;
-        return (i);
+	for (i = 0; s[i] != '\0'; i++)
+		;
+	return (i);
 }
 
-/**                                                                                                  
- * _putchar - writes the character c to stdout                                                       
- * @c: The character to print                                                                        
- *                                                                                                   
- * Return: On success 1.                                                                             
- * On error, -1 is returned, and errno is set appropriately.                                         
+/**
+ * _putchar - writes the character c to stdout
+ * @c: The character to print
+ *
+ * Return: On success 1.
+ * On error, -1 is returned, and errno is set appropriately.
  */
 int _putchar(char c)
 {
-        return (write(STDERR_FILENO, &c, 1));
+	return (write(STDERR_FILENO, &c, 1));
 }
