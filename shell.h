@@ -26,6 +26,8 @@ int _strcmp(char *s1, char *s2);
 long _stoi(char *s);
 int string_mod(char *str);
 char *_memset(char *s, char b, unsigned int n);
+char *_memcpy(char *dest, char *src, unsigned int n);
+
 
 /* program executing fucntion */
 int exec_func(char *buf, int rd, char *name, char *p_cwd, int ct, char **env);
@@ -38,5 +40,8 @@ int _setenv(char **env, const char *name, const char *value, int overwrite);
 int ch_dir(char *av2, char *pr_cwd, char **env, char *name, int ct, char **av);
 void free_helper(char **av);
 void sigintHandler(int sig_num);
+int _getline(char **buffer, size_t *n);
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+
 
 #endif

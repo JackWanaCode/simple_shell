@@ -28,7 +28,7 @@ int main(int argc, char **argv, char **env)
 		check = 0;
 		if (isatty(0) == 1)
 			write(STDOUT_FILENO, "$ ", 2);
-		rd = getline(&buffer, &size, stdin);
+		rd = _getline(&buffer, &size);
 		for (i = 0; buffer[i] != '\0'; i++)
 		{
 			if (buffer[i] == ' ' || buffer[i] == '\t')
