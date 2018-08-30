@@ -6,10 +6,10 @@
  * @av0: First argument from user.
  * @f_av: Pointer to a full path of command.
  * @env: The environment variable.
- * Return: Nothing.
+ * Return: 0 if nothing found.
  */
 
-void argv_check(char *av0, char *f_av, char **env)
+int argv_check(char *av0, char *f_av, char **env)
 {
 	struct stat st;
 	int i = 0, j = 0;
@@ -19,7 +19,7 @@ void argv_check(char *av0, char *f_av, char **env)
 	if (stat(av0, &st) == 0)
 	{
 		f_av = av0;
-		return;
+		return (1);
 	}
 
 	str = _getenv(env, "PATH");
@@ -29,14 +29,14 @@ void argv_check(char *av0, char *f_av, char **env)
 			_strcat(f_av, "/");
 			_strcat(f_av, av0);
 			if (access(f_av, X_OK) == 0)
-				return;
+				return (1);
 			_memset(f_av, 0, _strlen(f_av));
 			j = 0;
 		}
 		else
 			f_av[j++] = str[i];
 	} while (str[i++] != '\0');
-	_strcat(f_av, av0);
+	return (0);
 }
 
 /**

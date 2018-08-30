@@ -31,7 +31,7 @@ char *_memset(char *s, char b, unsigned int n);
 int exec_func(char *buf, int rd, char *name, char *p_cwd, int ct, char **env);
 
 /* helper functions for executing program / command */
-void argv_check(char *av0, char *f_av, char **env);
+int argv_check(char *av0, char *f_av, char **env);
 int built_in(char **av, char *prev_cwd, char **env, char *name, int count);
 char *_getenv(char **env, const char *name);
 int _setenv(char **env, const char *name, const char *value, int overwrite);

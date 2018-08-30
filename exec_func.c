@@ -36,8 +36,18 @@ int exec_func(char *buf, int rd, char *name, char *p_cwd, int ct, char **env)
 		return (2);
 	/* check if the command located in PATH */
 	_strcpy(f_av, av[0]);
-	argv_check(av[0], f_av, env);
-	child_pid = fork();
+	if (argv_check(av[0], f_av, env) == 0)
+	{
+		write(STDERR_FILENO, name, _strlen(name));
+		write(STDERR_FILENO, ": ", 2);
+		print_num(ct);
+		write(STDERR_FILENO, ": ", 2);
+		write(STDERR_FILENO, av[0], _strlen(av[0]));
+		write(STDERR_FILENO, ": ", 2);
+		write(STDERR_FILENO, "not found\n", 10);
+		return (127);
+	}
+		child_pid = fork();
 
 	if (child_pid == -1)
 	{
