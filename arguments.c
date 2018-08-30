@@ -16,7 +16,7 @@ int main(int argc, char **argv, char **env)
 	int rd = 0, ct = 0, exchk = 0;
 	size_t size = 0;
 	int i = 0, status = 1, check;
-	char *name = &(argv[0][2]);
+	char *name = argv[0];
 
 	(void)argc;
 	_memset(prev_cwd, 0, 200);

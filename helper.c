@@ -192,7 +192,7 @@ int ch_dir(char *av2, char *pr_cwd, char **env, char *name, int ct, char **av)
 	else if (_strcmp(av2, "-") == 0)
 	{
 		chdir(pr_cwd);
-		write(STDOUT_FILENO, pr_cwd, strlen(pr_cwd));
+		write(STDOUT_FILENO, pr_cwd, _strlen(pr_cwd));
 		write(STDOUT_FILENO, "\n", 1);
 		_setenv(env, "PWD", pr_cwd, 1);
 		_memset(pr_cwd, 0, 200);
