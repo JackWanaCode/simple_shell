@@ -15,13 +15,14 @@ int main(int argc, char **argv, char **env)
 	char *buffer = NULL, prev_cwd[200];
 	int rd = 0, ct = 0, exchk = 0;
 	size_t size = 0;
-	int status = 1, i = 0, check;
+	int i = 0, status = 1, check;
 	char *name = &(argv[0][2]);
 
 	(void)argc;
 	_memset(prev_cwd, 0, 200);
 	_strcpy(prev_cwd, _getenv(env, "PWD"));
 	signal(SIGINT, sigintHandler);
+
 	while (status)
 	{
 		ct++;

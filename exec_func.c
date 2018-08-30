@@ -19,13 +19,16 @@ int exec_func(char *buf, int rd, char *name, char *p_cwd, int ct, char **env)
 	char **av = NULL;
 	pid_t child_pid;
 	int n = string_mod(buf);
-	int built_in_ret = 0;
+	int built_in_ret;
 
+	if (rd == -1)
+		return (1);
 	av = malloc(sizeof(char *) * (n + 1));
 	if (av == NULL)
 		return (1);
 	string_split(buf, av, rd);
 	/* check if local program or other built-in func*/
+
 	built_in_ret = built_in(av, p_cwd, env, name, ct);
 	if (built_in_ret == 1)
 		return (0);
@@ -54,7 +57,7 @@ int exec_func(char *buf, int rd, char *name, char *p_cwd, int ct, char **env)
                         write(STDERR_FILENO,": ", 2);
                         write(STDERR_FILENO, "not found\n", 10);
 			free(av);
-			exit(1);
+			exit(0);
 		}
 	}
 	else
